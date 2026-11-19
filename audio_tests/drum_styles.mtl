@@ -1,0 +1,195 @@
+// CodeRabbit generated eight-style drum comparison.
+bpm 120
+length 8 bars
+seed 2
+pattern basic
+    length 1 bar
+    kick on 1 hold 1/8 beats vel 0.8610430844700324
+    kick on 3 hold 1/8 beats vel 0.8603044738353414
+    snare on 2 hold 1/8 beats vel 0.6800896230954128
+    snare on 4 hold 1/8 beats vel 0.6826384795643029
+    hihat on 1 hold 1/8 beats vel 0.48019489903165047
+    hihat on 3/2 hold 1/8 beats vel 0.4712372990161671
+    hihat on 2 hold 1/8 beats vel 0.4652757361296199
+    hihat on 5/2 hold 1/8 beats vel 0.432732281183023
+    hihat on 3 hold 1/8 beats vel 0.45953497491106166
+    hihat on 7/2 hold 1/8 beats vel 0.4596121560276754
+    hihat on 4 hold 1/8 beats vel 0.4573083615400803
+    hihat on 9/2 hold 1/8 beats vel 0.4192544583229325
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track basic instrument drums pattern basic volume -6db
+pattern jazz
+    length 1 bar
+    ride on 1 hold 1/8 beats vel 0.4910430844700324
+    ride on 2 hold 1/8 beats vel 0.4903044738353415
+    ride on 8/3 hold 1/8 beats vel 0.4100896230954128
+    ride on 3 hold 1/8 beats vel 0.41263847956430294
+    ride on 4 hold 1/8 beats vel 0.48019489903165047
+    ride on 14/3 hold 1/8 beats vel 0.4712372990161671
+    kick on 1 hold 1/8 beats vel 0.5072757361296198
+    kick on 3 hold 1/8 beats vel 0.4747322811830229
+    snare on 5/3 hold 1/8 beats vel 0.2795349749110616
+    snare on 11/3 hold 1/8 beats vel 0.2796121560276754
+    hihat on 2 hold 1/8 beats vel 0.4573083615400803
+    hihat on 4 hold 1/8 beats vel 0.4192544583229325
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track jazz instrument drums pattern jazz volume -6db
+pattern country
+    length 1 bar
+    kick on 1 hold 1/8 beats vel 0.8610430844700324
+    kick on 3 hold 1/8 beats vel 0.8603044738353414
+    snare on 1 hold 1/8 beats vel 0.2300896230954128
+    snare on 3/2 hold 1/8 beats vel 0.23263847956430297
+    snare on 2 hold 1/8 beats vel 0.7301948990316505
+    snare on 5/2 hold 1/8 beats vel 0.29123729901616713
+    snare on 3 hold 1/8 beats vel 0.2852757361296199
+    snare on 7/2 hold 1/8 beats vel 0.252732281183023
+    snare on 4 hold 1/8 beats vel 0.7095349749110615
+    snare on 9/2 hold 1/8 beats vel 0.2796121560276754
+    hihat on 1 hold 1/8 beats vel 0.4573083615400803
+    hihat on 2 hold 1/8 beats vel 0.4192544583229325
+    hihat on 3 hold 1/8 beats vel 0.4437602676262142
+    hihat on 4 hold 1/8 beats vel 0.4404178638184834
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track country instrument drums pattern country volume -6db
+pattern techno
+    length 1 bar
+    kick on 1 hold 1/8 beats vel 0.8610430844700324
+    kick on 2 hold 1/8 beats vel 0.8603044738353414
+    kick on 3 hold 1/8 beats vel 0.7800896230954127
+    kick on 4 hold 1/8 beats vel 0.7826384795643029
+    clap on 2 hold 1/8 beats vel 0.7501948990316505
+    clap on 4 hold 1/8 beats vel 0.7412372990161671
+    hihat on 1 hold 1/8 beats vel 0.4652757361296199
+    hihat on 5/4 hold 1/8 beats vel 0.432732281183023
+    hihat on 3/2 hold 1/8 beats vel 0.45953497491106166
+    hihat on 7/4 hold 1/8 beats vel 0.4596121560276754
+    hihat on 2 hold 1/8 beats vel 0.4573083615400803
+    hihat on 9/4 hold 1/8 beats vel 0.4192544583229325
+    hihat on 5/2 hold 1/8 beats vel 0.4437602676262142
+    hihat on 11/4 hold 1/8 beats vel 0.4404178638184834
+    hihat on 3 hold 1/8 beats vel 0.4700710873113719
+    hihat on 13/4 hold 1/8 beats vel 0.49453376066547683
+    hihat on 7/2 hold 1/8 beats vel 0.49044559257839193
+    hihat on 15/4 hold 1/8 beats vel 0.4539759342686389
+    hihat on 4 hold 1/8 beats vel 0.44503687698532685
+    hihat on 17/4 hold 1/8 beats vel 0.42914166674843957
+    hihat on 9/2 hold 1/8 beats vel 0.4082331896453572
+    hihat on 19/4 hold 1/8 beats vel 0.4074700371381737
+    open_hat on 3/2 hold 1/8 beats vel 0.44684044758875807
+    open_hat on 7/2 hold 1/8 beats vel 0.433661861506831
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track techno instrument drums pattern techno volume -6db
+pattern reggae
+    length 1 bar
+    kick on 3 hold 1/8 beats vel 0.8610430844700324
+    snare on 3 hold 1/8 beats vel 0.7603044738353414
+    hihat on 1 hold 1/8 beats vel 0.4100896230954128
+    hihat on 3/2 hold 1/8 beats vel 0.41263847956430294
+    hihat on 2 hold 1/8 beats vel 0.48019489903165047
+    hihat on 5/2 hold 1/8 beats vel 0.4712372990161671
+    hihat on 3 hold 1/8 beats vel 0.4652757361296199
+    hihat on 7/2 hold 1/8 beats vel 0.432732281183023
+    hihat on 4 hold 1/8 beats vel 0.45953497491106166
+    hihat on 9/2 hold 1/8 beats vel 0.4596121560276754
+    perc on 5/2 hold 1/8 beats vel 0.4573083615400803
+    perc on 9/2 hold 1/8 beats vel 0.4192544583229325
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track reggae instrument drums pattern reggae volume -6db
+pattern house
+    length 1 bar
+    kick on 1 hold 1/8 beats vel 0.8610430844700324
+    kick on 2 hold 1/8 beats vel 0.8603044738353414
+    kick on 3 hold 1/8 beats vel 0.7800896230954127
+    kick on 4 hold 1/8 beats vel 0.7826384795643029
+    clap on 2 hold 1/8 beats vel 0.7501948990316505
+    clap on 4 hold 1/8 beats vel 0.7412372990161671
+    open_hat on 3/2 hold 1/8 beats vel 0.4652757361296199
+    open_hat on 5/2 hold 1/8 beats vel 0.432732281183023
+    open_hat on 7/2 hold 1/8 beats vel 0.45953497491106166
+    open_hat on 9/2 hold 1/8 beats vel 0.4596121560276754
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track house instrument drums pattern house volume -6db
+pattern rock
+    length 1 bar
+    kick on 1 hold 1/8 beats vel 0.8610430844700324
+    kick on 5/2 hold 1/8 beats vel 0.8603044738353414
+    kick on 3 hold 1/8 beats vel 0.7800896230954127
+    kick on 15/4 hold 1/8 beats vel 0.7826384795643029
+    snare on 2 hold 1/8 beats vel 0.7501948990316505
+    snare on 4 hold 1/8 beats vel 0.7412372990161671
+    hihat on 1 hold 1/8 beats vel 0.4652757361296199
+    hihat on 3/2 hold 1/8 beats vel 0.432732281183023
+    hihat on 2 hold 1/8 beats vel 0.45953497491106166
+    hihat on 5/2 hold 1/8 beats vel 0.4596121560276754
+    hihat on 3 hold 1/8 beats vel 0.4573083615400803
+    hihat on 7/2 hold 1/8 beats vel 0.4192544583229325
+    hihat on 4 hold 1/8 beats vel 0.4437602676262142
+    hihat on 9/2 hold 1/8 beats vel 0.4404178638184834
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track rock instrument drums pattern rock volume -6db
+pattern dubstep
+    length 1 bar
+    kick on 1 hold 1/8 beats vel 0.8610430844700324
+    kick on 15/4 hold 1/8 beats vel 0.8603044738353414
+    snare on 3 hold 1/8 beats vel 0.6800896230954128
+    hihat on 1 hold 1/8 beats vel 0.41263847956430294
+    hihat on 3/2 hold 1/8 beats vel 0.48019489903165047
+    hihat on 2 hold 1/8 beats vel 0.4712372990161671
+    hihat on 5/2 hold 1/8 beats vel 0.4652757361296199
+    hihat on 3 hold 1/8 beats vel 0.432732281183023
+    hihat on 7/2 hold 1/8 beats vel 0.45953497491106166
+    hihat on 4 hold 1/8 beats vel 0.4596121560276754
+    hihat on 17/4 hold 1/8 beats vel 0.4573083615400803
+    hihat on 9/2 hold 1/8 beats vel 0.4192544583229325
+    hihat on 19/4 hold 1/8 beats vel 0.4437602676262142
+    snare on 4 hold 1/8 beats vel 0.45
+    snare on 17/4 hold 1/8 beats vel 0.53
+    tom on 9/2 hold 1/8 beats vel 0.61
+    tom on 19/4 hold 1/8 beats vel 0.69
+track dubstep instrument drums pattern dubstep volume -6db
+section basic
+    length 1 bar
+    only basic
+section jazz
+    length 1 bar
+    only jazz
+section country
+    length 1 bar
+    only country
+section techno
+    length 1 bar
+    only techno
+section reggae
+    length 1 bar
+    only reggae
+section house
+    length 1 bar
+    only house
+section rock
+    length 1 bar
+    only rock
+section dubstep
+    length 1 bar
+    only dubstep

@@ -1,0 +1,39 @@
+song "Wobble Study"
+bpm 120
+output "wobble.wav"
+seed 7
+
+instrument bass
+    type wavetable
+    oscillator saw
+    filter lowpass cutoff 500hz resonance 0.7
+    envelope attack 5ms decay 150ms sustain 0.7 release 180ms
+    lfo rate 1/4 target filter.cutoff depth 350hz
+
+pattern bassline
+    c2 on 1 hold 0.75 beats
+    g2 on 2 hold 0.75 beats
+    bb1 on 3 hold 0.75 beats
+    c2 on 4 hold 0.75 beats
+
+pattern beat
+    kick on 1, 2, 3, 4
+    snare on 2, 4
+    hihat every 1/8 vel 0.4
+
+track bass instrument bass pattern bassline volume -9db
+track drums instrument drums pattern beat volume -9db
+
+section intro
+    length 2 bars
+    bass only
+section build
+    length 4 bars
+    add drums
+section outro
+    length 2 bars
+    remove drums
+
+over 2 bars in build
+    bass.filter.cutoff from 500hz to 2400hz
+    drums.volume from -18db to -9db

@@ -1,0 +1,57 @@
+// CodeRabbit generated original showcase. Each instrument enters in sequence.
+song "Acoustic and Organ Colors"
+bpm 100
+sample_rate 44100
+bit_depth 24
+seed 13
+import bank "acoustic"
+import bank "organs"
+
+pattern phrase
+    length 2 bars
+    d4 on 1 hold 0.7 beats vel 0.65
+    f4 on 2 hold 0.7 beats vel 0.72
+    a4 on 3 hold 0.7 beats vel 0.85
+    c5 on 4 hold 0.7 beats vel 0.75
+    a4 on 5 hold 0.5 beats vel 0.80
+    g4 on 5.75 hold 0.5 beats vel 0.68
+    f4 on 6.5 hold 0.5 beats vel 0.65
+    d4 on 7.25 hold 1.2 beats vel 0.75
+pattern harmony
+    length 2 bars
+    d3 f3 a3 c4 on 1 hold 3.5 beats vel 0.65
+    g3 b3 d4 f4 on 5 hold 3.5 beats vel 0.70
+
+track brass instrument concert_trumpet pattern phrase volume 1db pan -12
+track strings instrument solo_violin pattern phrase volume 1db pan 12
+track mallets instrument studio_vibes pattern phrase volume 1db pan -8
+track jazz instrument jazz_drawbar pattern harmony volume -4db
+track rock instrument rock_drawbar pattern harmony volume -6db
+track church instrument cathedral_organ pattern harmony volume -8db
+track reeds instrument soft_reed_organ pattern harmony volume -4db
+section trumpet
+    length 2 bars
+    brass only
+section violin
+    length 2 bars
+    strings only
+section vibraphone
+    length 2 bars
+    mallets only
+section jazz_organ
+    length 2 bars
+    jazz only
+section rock_organ
+    length 2 bars
+    rock only
+section pipe_organ
+    length 2 bars
+    church only
+section reed_organ
+    length 2 bars
+    reeds only
+section ending
+    length 1 bar
+    remove reeds
+master
+    peak -1db

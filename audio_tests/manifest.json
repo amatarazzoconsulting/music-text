@@ -1,0 +1,110 @@
+{
+  "provenance": "coderabbit-ai-generated:v1",
+  "quality": 3,
+  "demos": [
+    {
+      "file": "drum_styles.wav",
+      "source": "drum_styles.mtl",
+      "frames": 705600,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 16.0,
+      "peak_db": -14.808446697217466,
+      "rms": 0.02391003626670132,
+      "pcm_sha256": "01fab6eda73f5f06d8c8b0d1066e033c9d63b1b9a6095233870dccf8a9954ad2",
+      "source_sha256": "48361248bb98b3cf6960b803ec3e2123620bdb596af7dc8e96eb8a99ff0bd1f2"
+    },
+    {
+      "file": "dsp_comparison.wav",
+      "source": "dsp_comparison.mtl",
+      "frames": 441000,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 10.0,
+      "peak_db": -16.540602259140147,
+      "rms": 0.035330678015887525,
+      "pcm_sha256": "361952af64b0fa82bce6ca5b1faaa86f5cc7827ec805b6ea3ac453422158b9c2",
+      "source_sha256": "212fc8164753e6ae8bc71a80d82be87ee414269d9b51fdbc00cd5d4777903dbc"
+    },
+    {
+      "file": "easy_piano.wav",
+      "source": "easy_piano.mtl",
+      "frames": 529200,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 12.0,
+      "peak_db": -13.937883113238305,
+      "rms": 0.02829311211662087,
+      "pcm_sha256": "0c60a5380dcfdf68b51636d0b81517ce39acdb51d031c708f018e5673d1bee0f",
+      "source_sha256": "c28f40135c8a2abecaaab4c1441540981b77ea20e86ab19e1821a44b9c19c29b"
+    },
+    {
+      "file": "filter_automation.wav",
+      "source": "filter_automation.mtl",
+      "frames": 705600,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 16.0,
+      "peak_db": -17.29702073574122,
+      "rms": 0.02779753010807399,
+      "pcm_sha256": "75cc8a041982eb44ff2f9a59c488f48796c9dc56a3837e1a6a49bc093c6653c2",
+      "source_sha256": "efc22fc0b2df975e91ffac5b147ab8abc710d5339ebec1d3eba974569d852625"
+    },
+    {
+      "file": "instruments.wav",
+      "source": "instruments.mtl",
+      "frames": 1587600,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 36.0,
+      "peak_db": -6.984542007752673,
+      "rms": 0.07059103394779563,
+      "pcm_sha256": "59a389586c9cab93acd3ec5e5fafc4a1e63c35e2334c5078aaaa73529a7176b2",
+      "source_sha256": "86008e9c8d80272f2528869359c5916913914613555b99d0166ba0f72338c74d"
+    },
+    {
+      "file": "song_jazz.wav",
+      "source": "song_jazz.mtl",
+      "frames": 610615,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 13.846145124716553,
+      "peak_db": -8.615328741129346,
+      "rms": 0.06118738316880239,
+      "pcm_sha256": "346d5cae0b5a0b9150341e32c6fe8f0fea54add04d676c8c97a36390ee342dd6",
+      "source_sha256": "1d16e94028be1e292a11cf6f7d37b3c6d7331d81f74ff6ca2d12e725e4e013d9"
+    },
+    {
+      "file": "song_reggae.wav",
+      "source": "song_reggae.mtl",
+      "frames": 721636,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 16.363628117913834,
+      "peak_db": -11.595830977181675,
+      "rms": 0.038209999291823525,
+      "pcm_sha256": "639d3038927e566b41ccf23fe0364c8477cacd79d5df6659bc951fff5aea4fcb",
+      "source_sha256": "e17ded07c5b63b9d58bc96c89766b33a595e8b19e75d0ed0e73c12e13893c144"
+    },
+    {
+      "file": "song_techno.wav",
+      "source": "song_techno.mtl",
+      "frames": 496125,
+      "rate": 44100,
+      "channels": 2,
+      "bits": 16,
+      "seconds": 11.25,
+      "peak_db": -16.042548599453806,
+      "rms": 0.027787568672327193,
+      "pcm_sha256": "3b93f976bcd10556398a4bc870a544dc96abe2eeaae82f6fcbf8b669893cc5dc",
+      "source_sha256": "4d4db62a0f06808e23b805b247c45dcbce976adbd4253630fae1f1f85c9187a5"
+    }
+  ]
+}

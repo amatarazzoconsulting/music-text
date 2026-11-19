@@ -1,11 +1,13 @@
 <!-- coderabbit-ai-generated:v1 -->
 
+<!-- coderabbit-ai-generated-section:v1:75858dd6dfa97e9191f20565a54d33fb97cc8d6c07a9758e12abaeccce0d3b54 -->
+
 # Compact songs, automatic accompaniment and piano
 
 ## A whole song in a few words
 
 ```text
-panio c f g2s repat four bars
+piano c f g2s repeat four bars
 ```
 
 This accepts the spelling slips and creates a piano track, a basic drummer, four body bars, a one-bar intro and a one-bar ending. Default tempo is **120 BPM**. The total is six bars (12 seconds in 4/4). `g2s` means G4 for two seconds; C and F use one beat each. `g2` without `s` means G2. A separate trailing duration, as in `piano c f g 2s`, applies to all three notes. Notes crossing the body boundary are shortened to fit.
@@ -115,3 +117,6 @@ Key ranges are inclusive. For covered keys, the closest root is chosen; velocity
 Limits: 2 MiB JSON, 1–2048 zones; each WAV retains existing decoding/rate/duration limits. Missing coverage or assets produce errors. Rendering cannot overwrite mapped source WAV files. There are no separate release samples, pedal resonance samples, microphone positions, SF2/Kontakt/VST loading or streaming from disk. A commercial library's proprietary container must be converted into a supported WAV map where permitted; no recorded commercial assets are included.
 
 The implementation and demos are tested for timing, pitch, dynamics, stereo behavior and file integrity. Commercial-or-better piano quality has **not** been established; that requires suitable recordings and listening comparisons.
+
+
+<!-- /coderabbit-ai-generated:v1 -->

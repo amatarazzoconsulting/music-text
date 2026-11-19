@@ -1,0 +1,48 @@
+// CodeRabbit generated DSP comparison. Same phrase, successive processing.
+bpm 120
+seed 4
+pattern phrase
+    c3 on 1 hold 1 beat
+    g3 on 2 hold 1 beat
+    bb3 on 3 hold 1 beat
+    c4 on 4 hold 1 beat
+instrument dry
+    oscillator saw
+    envelope attack 5ms decay 100ms sustain 0.65 release 150ms
+track dry instrument dry pattern phrase volume -9db
+instrument filter
+    oscillator saw
+    envelope attack 5ms decay 100ms sustain 0.65 release 150ms
+    filter lowpass cutoff 700hz resonance 1.5
+    lfo rate 1/4 target filter.cutoff depth 500hz
+track filter instrument filter pattern phrase volume -9db
+instrument drive
+    oscillator saw
+    envelope attack 5ms decay 100ms sustain 0.65 release 150ms
+    distortion heavy
+track drive instrument drive pattern phrase volume -9db
+instrument delay
+    oscillator saw
+    envelope attack 5ms decay 100ms sustain 0.65 release 150ms
+    delay time 0.3s feedback 0.5 mix 0.35
+track delay instrument delay pattern phrase volume -9db
+instrument reverb
+    oscillator saw
+    envelope attack 5ms decay 100ms sustain 0.65 release 150ms
+    reverb hall mix 0.45
+track reverb instrument reverb pattern phrase volume -9db
+section dry
+    length 1 bar
+    only dry
+section filter
+    length 1 bar
+    only filter
+section drive
+    length 1 bar
+    only drive
+section delay
+    length 1 bar
+    only delay
+section reverb
+    length 1 bar
+    only reverb
