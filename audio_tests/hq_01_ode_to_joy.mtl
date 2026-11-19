@@ -1,0 +1,132 @@
+// CodeRabbit generated arrangement of a public-domain melody.
+song "Ode to Joy - Chamber Theme"
+bpm 100
+time_signature 4/4
+sample_rate 48000
+bit_depth 24
+seed 102
+import "hq_instruments.mtl"
+pattern theme
+    length 16 bars
+    e4 on 1 hold 0.92 beats vel 0.640
+    e4 on 2 hold 0.92 beats vel 0.664
+    f4 on 3 hold 0.92 beats vel 0.688
+    g4 on 4 hold 0.92 beats vel 0.712
+    g4 on 5 hold 0.92 beats vel 0.736
+    f4 on 6 hold 0.92 beats vel 0.640
+    e4 on 7 hold 0.92 beats vel 0.664
+    d4 on 8 hold 0.92 beats vel 0.688
+    c4 on 9 hold 0.92 beats vel 0.712
+    c4 on 10 hold 0.92 beats vel 0.736
+    d4 on 11 hold 0.92 beats vel 0.640
+    e4 on 12 hold 0.92 beats vel 0.664
+    e4 on 13 hold 1.38 beats vel 0.688
+    d4 on 14.5 hold 0.46 beats vel 0.712
+    d4 on 15 hold 1.84 beats vel 0.736
+    e4 on 17 hold 0.92 beats vel 0.640
+    e4 on 18 hold 0.92 beats vel 0.664
+    f4 on 19 hold 0.92 beats vel 0.688
+    g4 on 20 hold 0.92 beats vel 0.712
+    g4 on 21 hold 0.92 beats vel 0.736
+    f4 on 22 hold 0.92 beats vel 0.640
+    e4 on 23 hold 0.92 beats vel 0.664
+    d4 on 24 hold 0.92 beats vel 0.688
+    c4 on 25 hold 0.92 beats vel 0.712
+    c4 on 26 hold 0.92 beats vel 0.736
+    d4 on 27 hold 0.92 beats vel 0.640
+    e4 on 28 hold 0.92 beats vel 0.664
+    d4 on 29 hold 1.38 beats vel 0.688
+    c4 on 30.5 hold 0.46 beats vel 0.712
+    c4 on 31 hold 1.84 beats vel 0.736
+    d4 on 33 hold 0.92 beats vel 0.640
+    d4 on 34 hold 0.92 beats vel 0.664
+    e4 on 35 hold 0.92 beats vel 0.688
+    c4 on 36 hold 0.92 beats vel 0.712
+    d4 on 37 hold 0.92 beats vel 0.736
+    e4 on 38 hold 0.46 beats vel 0.640
+    f4 on 38.5 hold 0.46 beats vel 0.664
+    e4 on 39 hold 0.92 beats vel 0.688
+    c4 on 40 hold 0.92 beats vel 0.712
+    d4 on 41 hold 0.92 beats vel 0.736
+    e4 on 42 hold 0.46 beats vel 0.640
+    f4 on 42.5 hold 0.46 beats vel 0.664
+    e4 on 43 hold 0.92 beats vel 0.688
+    d4 on 44 hold 0.92 beats vel 0.712
+    c4 on 45 hold 0.92 beats vel 0.736
+    d4 on 46 hold 0.92 beats vel 0.640
+    g3 on 47 hold 1.84 beats vel 0.664
+    e4 on 49 hold 0.92 beats vel 0.688
+    e4 on 50 hold 0.92 beats vel 0.712
+    f4 on 51 hold 0.92 beats vel 0.736
+    g4 on 52 hold 0.92 beats vel 0.640
+    g4 on 53 hold 0.92 beats vel 0.664
+    f4 on 54 hold 0.92 beats vel 0.688
+    e4 on 55 hold 0.92 beats vel 0.712
+    d4 on 56 hold 0.92 beats vel 0.736
+    c4 on 57 hold 0.92 beats vel 0.640
+    c4 on 58 hold 0.92 beats vel 0.664
+    d4 on 59 hold 0.92 beats vel 0.688
+    e4 on 60 hold 0.92 beats vel 0.712
+    d4 on 61 hold 1.38 beats vel 0.736
+    c4 on 62.5 hold 0.46 beats vel 0.640
+    c4 on 63 hold 1.84 beats vel 0.664
+
+pattern harmony
+    length 16 bars
+    c3 e3 g3 on 1 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 5 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 9 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 13 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 17 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 21 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 25 hold 3.85 beats vel 0.400
+    g2 b2 d3 on 29 hold 3.85 beats vel 0.400
+    g2 b2 d3 on 33 hold 3.85 beats vel 0.400
+    g2 b2 d3 on 37 hold 3.85 beats vel 0.400
+    g2 b2 d3 on 41 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 45 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 49 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 53 hold 3.85 beats vel 0.400
+    c3 e3 g3 on 57 hold 3.85 beats vel 0.400
+    g2 b2 d3 on 61 hold 3.85 beats vel 0.400
+
+pattern foundation
+    length 16 bars
+    c2 on 1 hold 3.7 beats vel 0.400
+    c2 on 5 hold 3.7 beats vel 0.400
+    c2 on 9 hold 3.7 beats vel 0.400
+    c2 on 13 hold 3.7 beats vel 0.400
+    c2 on 17 hold 3.7 beats vel 0.400
+    c2 on 21 hold 3.7 beats vel 0.400
+    c2 on 25 hold 3.7 beats vel 0.400
+    g1 on 29 hold 3.7 beats vel 0.400
+    g1 on 33 hold 3.7 beats vel 0.400
+    g1 on 37 hold 3.7 beats vel 0.400
+    g1 on 41 hold 3.7 beats vel 0.400
+    c2 on 45 hold 3.7 beats vel 0.400
+    c2 on 49 hold 3.7 beats vel 0.400
+    c2 on 53 hold 3.7 beats vel 0.400
+    c2 on 57 hold 3.7 beats vel 0.400
+    g1 on 61 hold 3.7 beats vel 0.400
+
+track melody instrument velvet_keys pattern theme volume -7db pan -8
+track strings instrument chamber_bow pattern theme volume -19db pan 18
+track harmony instrument glass_mallet pattern harmony volume -18db pan -15
+track bass instrument round_bass pattern foundation volume -17db
+section performance
+    length 16 bars
+    add melody
+    add strings
+    add harmony
+    add bass
+section tail
+    length 2 bars
+    remove all
+over 4 bars in performance
+    melody.volume from -11db to -7db
+    harmony.filter.cutoff from 2200hz to 6500hz
+humanize all tracks
+    timing ±4ms
+    velocity ±4%
+master
+    peak -3db

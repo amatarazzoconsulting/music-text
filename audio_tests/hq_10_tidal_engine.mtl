@@ -1,0 +1,293 @@
+// CodeRabbit generated original composition. Not a cover or soundalike.
+song "Tidal Engine"
+bpm 140
+sample_rate 48000
+bit_depth 24
+seed 110
+import "hq_instruments.mtl"
+
+pattern voicings
+    length 8 bars
+    d3 f3 a3 on 1 hold 1.3 beats vel 0.570
+    d3 f3 a3 on 2.75 hold 0.7 beats vel 0.440
+    d3 f3 a3 on 4 hold 0.7 beats vel 0.500
+    bb2 d3 f3 on 5 hold 1.3 beats vel 0.595
+    bb2 d3 f3 on 6.75 hold 0.7 beats vel 0.465
+    bb2 d3 f3 on 8 hold 0.7 beats vel 0.525
+    g2 bb2 d3 on 9 hold 1.3 beats vel 0.620
+    g2 bb2 d3 on 10.75 hold 0.7 beats vel 0.490
+    g2 bb2 d3 on 12 hold 0.7 beats vel 0.550
+    a2 c#3 e3 on 13 hold 1.3 beats vel 0.570
+    a2 c#3 e3 on 14.75 hold 0.7 beats vel 0.440
+    a2 c#3 e3 on 16 hold 0.7 beats vel 0.500
+    d3 f3 a3 on 17 hold 1.3 beats vel 0.595
+    d3 f3 a3 on 18.75 hold 0.7 beats vel 0.465
+    d3 f3 a3 on 20 hold 0.7 beats vel 0.525
+    bb2 d3 f3 on 21 hold 1.3 beats vel 0.620
+    bb2 d3 f3 on 22.75 hold 0.7 beats vel 0.490
+    bb2 d3 f3 on 24 hold 0.7 beats vel 0.550
+    g2 bb2 d3 on 25 hold 1.3 beats vel 0.570
+    g2 bb2 d3 on 26.75 hold 0.7 beats vel 0.440
+    g2 bb2 d3 on 28 hold 0.7 beats vel 0.500
+    a2 c#3 e3 on 29 hold 1.3 beats vel 0.595
+    a2 c#3 e3 on 30.75 hold 0.7 beats vel 0.465
+    a2 c#3 e3 on 32 hold 0.7 beats vel 0.525
+
+pattern atmosphere
+    length 8 bars
+    d3 f3 a3 on 1 hold 3.65 beats vel 0.460
+    bb2 d3 f3 on 5 hold 3.65 beats vel 0.460
+    g2 bb2 d3 on 9 hold 3.65 beats vel 0.460
+    a2 c#3 e3 on 13 hold 3.65 beats vel 0.460
+    d3 f3 a3 on 17 hold 3.65 beats vel 0.460
+    bb2 d3 f3 on 21 hold 3.65 beats vel 0.460
+    g2 bb2 d3 on 25 hold 3.65 beats vel 0.460
+    a2 c#3 e3 on 29 hold 3.65 beats vel 0.460
+
+pattern lowline
+    length 8 bars
+    d2 on 1 hold 0.8 beats vel 0.650
+    d2 on 2.5 hold 0.45 beats vel 0.650
+    a2 on 3 hold 0.65 beats vel 0.650
+    d3 on 4.25 hold 0.4 beats vel 0.650
+    bb1 on 5 hold 0.8 beats vel 0.690
+    bb1 on 6.5 hold 0.45 beats vel 0.690
+    f2 on 7 hold 0.65 beats vel 0.690
+    bb2 on 8.25 hold 0.4 beats vel 0.690
+    g1 on 9 hold 0.8 beats vel 0.650
+    g1 on 10.5 hold 0.45 beats vel 0.650
+    d2 on 11 hold 0.65 beats vel 0.650
+    g2 on 12.25 hold 0.4 beats vel 0.650
+    a1 on 13 hold 0.8 beats vel 0.690
+    a1 on 14.5 hold 0.45 beats vel 0.690
+    e2 on 15 hold 0.65 beats vel 0.690
+    a2 on 16.25 hold 0.4 beats vel 0.690
+    d2 on 17 hold 0.8 beats vel 0.650
+    d2 on 18.5 hold 0.45 beats vel 0.650
+    a2 on 19 hold 0.65 beats vel 0.650
+    d3 on 20.25 hold 0.4 beats vel 0.650
+    bb1 on 21 hold 0.8 beats vel 0.690
+    bb1 on 22.5 hold 0.45 beats vel 0.690
+    f2 on 23 hold 0.65 beats vel 0.690
+    bb2 on 24.25 hold 0.4 beats vel 0.690
+    g1 on 25 hold 0.8 beats vel 0.650
+    g1 on 26.5 hold 0.45 beats vel 0.650
+    d2 on 27 hold 0.65 beats vel 0.650
+    g2 on 28.25 hold 0.4 beats vel 0.650
+    a1 on 29 hold 0.8 beats vel 0.690
+    a1 on 30.5 hold 0.45 beats vel 0.690
+    e2 on 31 hold 0.65 beats vel 0.690
+    a2 on 32.25 hold 0.4 beats vel 0.690
+
+pattern groove
+    length 8 bars
+    kick on 1 hold 0.2 beats vel 0.820
+    kick on 3.75 hold 0.2 beats vel 0.680
+    snare on 3 hold 0.16 beats vel 0.793
+    hihat on 1 hold 0.1 beats vel 0.281
+    hihat on 1.5 hold 0.1 beats vel 0.385
+    hihat on 2 hold 0.1 beats vel 0.274
+    hihat on 2.5 hold 0.1 beats vel 0.367
+    hihat on 3 hold 0.1 beats vel 0.275
+    hihat on 3.5 hold 0.1 beats vel 0.370
+    hihat on 4 hold 0.1 beats vel 0.264
+    hihat on 4.5 hold 0.1 beats vel 0.363
+    kick on 5 hold 0.2 beats vel 0.820
+    kick on 7.75 hold 0.2 beats vel 0.680
+    snare on 7 hold 0.16 beats vel 0.732
+    hihat on 5 hold 0.1 beats vel 0.262
+    hihat on 5.5 hold 0.1 beats vel 0.385
+    hihat on 6 hold 0.1 beats vel 0.310
+    hihat on 6.5 hold 0.1 beats vel 0.348
+    hihat on 7 hold 0.1 beats vel 0.295
+    hihat on 7.5 hold 0.1 beats vel 0.369
+    hihat on 8 hold 0.1 beats vel 0.283
+    hihat on 8.5 hold 0.1 beats vel 0.372
+    kick on 9 hold 0.2 beats vel 0.820
+    kick on 11.75 hold 0.2 beats vel 0.680
+    snare on 11 hold 0.16 beats vel 0.766
+    hihat on 9 hold 0.1 beats vel 0.275
+    hihat on 9.5 hold 0.1 beats vel 0.360
+    hihat on 10 hold 0.1 beats vel 0.288
+    hihat on 10.5 hold 0.1 beats vel 0.395
+    hihat on 11 hold 0.1 beats vel 0.311
+    hihat on 11.5 hold 0.1 beats vel 0.383
+    hihat on 12 hold 0.1 beats vel 0.285
+    hihat on 12.5 hold 0.1 beats vel 0.390
+    kick on 13 hold 0.2 beats vel 0.820
+    kick on 15.75 hold 0.2 beats vel 0.680
+    snare on 15 hold 0.16 beats vel 0.798
+    hihat on 13 hold 0.1 beats vel 0.309
+    hihat on 13.5 hold 0.1 beats vel 0.351
+    hihat on 14 hold 0.1 beats vel 0.283
+    hihat on 14.5 hold 0.1 beats vel 0.353
+    hihat on 15 hold 0.1 beats vel 0.285
+    hihat on 15.5 hold 0.1 beats vel 0.387
+    hihat on 16 hold 0.1 beats vel 0.287
+    hihat on 16.5 hold 0.1 beats vel 0.358
+    snare on 16.25 hold 0.1 beats vel 0.355
+    snare on 16.5 hold 0.1 beats vel 0.430
+    snare on 16.75 hold 0.1 beats vel 0.505
+    kick on 17 hold 0.2 beats vel 0.820
+    kick on 19.75 hold 0.2 beats vel 0.680
+    snare on 19 hold 0.16 beats vel 0.716
+    hihat on 17 hold 0.1 beats vel 0.268
+    hihat on 17.5 hold 0.1 beats vel 0.385
+    hihat on 18 hold 0.1 beats vel 0.312
+    hihat on 18.5 hold 0.1 beats vel 0.389
+    hihat on 19 hold 0.1 beats vel 0.260
+    hihat on 19.5 hold 0.1 beats vel 0.355
+    hihat on 20 hold 0.1 beats vel 0.268
+    hihat on 20.5 hold 0.1 beats vel 0.365
+    kick on 21 hold 0.2 beats vel 0.820
+    kick on 23.75 hold 0.2 beats vel 0.680
+    snare on 23 hold 0.16 beats vel 0.720
+    hihat on 21 hold 0.1 beats vel 0.287
+    hihat on 21.5 hold 0.1 beats vel 0.365
+    hihat on 22 hold 0.1 beats vel 0.295
+    hihat on 22.5 hold 0.1 beats vel 0.368
+    hihat on 23 hold 0.1 beats vel 0.288
+    hihat on 23.5 hold 0.1 beats vel 0.342
+    hihat on 24 hold 0.1 beats vel 0.312
+    hihat on 24.5 hold 0.1 beats vel 0.363
+    kick on 25 hold 0.2 beats vel 0.820
+    kick on 27.75 hold 0.2 beats vel 0.680
+    snare on 27 hold 0.16 beats vel 0.787
+    hihat on 25 hold 0.1 beats vel 0.278
+    hihat on 25.5 hold 0.1 beats vel 0.345
+    hihat on 26 hold 0.1 beats vel 0.315
+    hihat on 26.5 hold 0.1 beats vel 0.367
+    hihat on 27 hold 0.1 beats vel 0.269
+    hihat on 27.5 hold 0.1 beats vel 0.393
+    hihat on 28 hold 0.1 beats vel 0.311
+    hihat on 28.5 hold 0.1 beats vel 0.346
+    kick on 29 hold 0.2 beats vel 0.820
+    kick on 31.75 hold 0.2 beats vel 0.680
+    snare on 31 hold 0.16 beats vel 0.795
+    hihat on 29 hold 0.1 beats vel 0.267
+    hihat on 29.5 hold 0.1 beats vel 0.347
+    hihat on 30 hold 0.1 beats vel 0.268
+    hihat on 30.5 hold 0.1 beats vel 0.388
+    hihat on 31 hold 0.1 beats vel 0.293
+    hihat on 31.5 hold 0.1 beats vel 0.371
+    hihat on 32 hold 0.1 beats vel 0.298
+    hihat on 32.5 hold 0.1 beats vel 0.356
+    snare on 32.25 hold 0.1 beats vel 0.355
+    snare on 32.5 hold 0.1 beats vel 0.430
+    snare on 32.75 hold 0.1 beats vel 0.505
+
+pattern theme_a
+    length 8 bars
+    d4 on 1.5 hold 0.27 beats vel 0.788
+    f4 on 2.25 hold 0.27 beats vel 0.690
+    a4 on 3.5 hold 0.27 beats vel 0.768
+    c5 on 4.25 hold 0.27 beats vel 0.665
+    a4 on 5.5 hold 0.27 beats vel 0.707
+    c5 on 6.25 hold 0.27 beats vel 0.669
+    a4 on 7.5 hold 0.27 beats vel 0.718
+    g4 on 8.25 hold 0.27 beats vel 0.633
+    a4 on 9.5 hold 0.27 beats vel 0.695
+    g4 on 10.25 hold 0.27 beats vel 0.677
+    f4 on 11.5 hold 0.27 beats vel 0.627
+    e4 on 12.25 hold 0.27 beats vel 0.767
+    f4 on 13.5 hold 0.27 beats vel 0.784
+    e4 on 14.25 hold 0.27 beats vel 0.647
+    d4 on 17.5 hold 0.27 beats vel 0.734
+    a3 on 18.25 hold 0.27 beats vel 0.715
+    c4 on 19.5 hold 0.27 beats vel 0.697
+    e4 on 20.25 hold 0.27 beats vel 0.726
+    c4 on 21.5 hold 0.27 beats vel 0.739
+    e4 on 22.25 hold 0.27 beats vel 0.670
+    d4 on 23.5 hold 0.27 beats vel 0.685
+    f4 on 24.25 hold 0.27 beats vel 0.711
+    d4 on 25.5 hold 0.27 beats vel 0.799
+    f4 on 26.25 hold 0.27 beats vel 0.788
+    a4 on 27.5 hold 0.27 beats vel 0.760
+    c5 on 28.25 hold 0.27 beats vel 0.702
+    a4 on 29.5 hold 0.27 beats vel 0.784
+    c5 on 30.25 hold 0.27 beats vel 0.796
+
+pattern theme_b
+    length 8 bars
+    c5 on 1.5 hold 0.27 beats vel 0.779
+    a4 on 2.25 hold 0.27 beats vel 0.655
+    g4 on 3.5 hold 0.27 beats vel 0.694
+    f4 on 4.25 hold 0.27 beats vel 0.661
+    g4 on 5.5 hold 0.27 beats vel 0.701
+    f4 on 6.25 hold 0.27 beats vel 0.774
+    e4 on 7.5 hold 0.27 beats vel 0.709
+    d4 on 8.25 hold 0.27 beats vel 0.679
+    e4 on 9.5 hold 0.27 beats vel 0.650
+    d4 on 10.25 hold 0.27 beats vel 0.645
+    a3 on 11.5 hold 0.27 beats vel 0.768
+    c4 on 12.25 hold 0.27 beats vel 0.791
+    a3 on 13.5 hold 0.27 beats vel 0.780
+    c4 on 14.25 hold 0.27 beats vel 0.621
+    e4 on 17.5 hold 0.27 beats vel 0.668
+    d4 on 18.25 hold 0.27 beats vel 0.645
+    f4 on 19.5 hold 0.27 beats vel 0.703
+    a4 on 20.25 hold 0.27 beats vel 0.656
+    f4 on 21.5 hold 0.27 beats vel 0.708
+    a4 on 22.25 hold 0.27 beats vel 0.701
+    c5 on 23.5 hold 0.27 beats vel 0.734
+    a4 on 24.25 hold 0.27 beats vel 0.713
+    c5 on 25.5 hold 0.27 beats vel 0.710
+    a4 on 26.25 hold 0.27 beats vel 0.628
+    g4 on 27.5 hold 0.27 beats vel 0.790
+    f4 on 28.25 hold 0.27 beats vel 0.697
+    g4 on 29.5 hold 0.27 beats vel 0.777
+    f4 on 30.25 hold 0.27 beats vel 0.678
+
+track keys instrument velvet_keys pattern voicings volume -15db pan -18
+track pad instrument luminous_pad pattern atmosphere volume -23db pan 12
+track bass instrument neon_bass pattern lowline volume -10db
+track drums instrument drums pattern groove volume -8db
+    reverb room mix 0.025
+track theme_a instrument elastic_bass pattern theme_a volume -9db pan 9
+track theme_b instrument elastic_bass pattern theme_b volume -9db pan -7
+    delay time 0.321429s feedback 0.2 mix 0.08
+
+section intro
+    length 2 bars
+    remove all
+    add keys
+    add pad
+section verse
+    length 8 bars
+    add bass
+    add drums
+    add theme_a
+section bridge
+    length 2 bars
+    remove drums
+    remove theme_a
+section lift
+    length 8 bars
+    add drums
+    add theme_b
+section outro
+    length 2 bars
+    remove bass
+    remove drums
+    remove theme_b
+section tail
+    length 1 bar
+    remove all
+
+over 2 bars in intro
+    keys.volume from -24db to -15db
+    pad.filter.cutoff from 650hz to 1900hz
+over 4 bars in verse
+    bass.filter.cutoff from 450hz to 1800hz
+over 2 bars in bridge
+    pad.filter.cutoff from 1900hz to 750hz
+over 4 bars in lift
+    theme_b.filter.cutoff from 600hz to 3200hz
+over 2 bars in outro
+    keys.volume from -15db to -42db
+    pad.volume from -23db to -48db
+humanize all tracks
+    timing ±2ms
+    velocity ±3%
+master
+    peak -3db

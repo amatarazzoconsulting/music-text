@@ -15,7 +15,17 @@ These are original generated demonstrations of the Python renderer. All WAVs are
 | [dsp_comparison.wav](dsp_comparison.wav) | The same saw phrase dry, with filter/LFO, with distortion, with delay, then with reverb. Each slot is two seconds; effect tails cross transitions. |
 | [filter_automation.wav](filter_automation.wav) | Four seconds of bass alone, an eight-second build with drums and cutoff/volume automation, then four seconds without drums. |
 
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:843bde9116f9f8710c1d79d33c26419fecfd707d108a63133aa38924e6a4ebd1 -->
+
+## Ten additional HQ arrangements
+
+Listen to the [HQ set and mastering guide](HQ_GUIDE.md): classical theme, anthem, jazz, blues, dance, breakbeat, boom bap, brass instrumental, funk and dubstep. The ten new WAVs are 48 kHz/24-bit quality-5 renders with instrument DSP, section automation and measured loudness mastering. Each has its `.mtl` source and shares an editable instrument bank.
+
 ## Reproduce a file
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 From the repository root after installation:
 

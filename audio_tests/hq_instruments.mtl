@@ -1,0 +1,76 @@
+// CodeRabbit generated original instrument parameters; no recorded assets.
+instrument velvet_keys from piano
+    hammer 0.38
+    soundboard 0.24
+    string_detune 0.55
+    pedal 0.18
+    stereo_width 0.65
+    filter lowpass cutoff 10500hz resonance 0.65
+    reverb room mix 0.065
+instrument chamber_bow from violin
+    envelope attack 80ms decay 250ms sustain 0.78 release 420ms
+    vibrato rate 5.4hz depth 0.0025
+    filter lowpass cutoff 6500hz resonance 0.6
+    reverb hall mix 0.12
+instrument satin_brass from trumpet
+    envelope attack 28ms decay 200ms sustain 0.78 release 230ms
+    vibrato rate 5.1hz depth 0.0017
+    filter lowpass cutoff 7200hz resonance 0.6
+    reverb room mix 0.09
+instrument glass_mallet from vibes
+    envelope attack 2ms decay 700ms sustain 0.6 release 650ms
+    filter lowpass cutoff 8500hz resonance 0.6
+    reverb room mix 0.09
+instrument blue_drawbar from organ
+    drawbars 8 6 8 1 0 2 0 0 0
+    rotary 1.2
+    percussion 0.2
+    vibrato rate 5.6hz depth 0.0012
+    envelope attack 5ms decay 15ms sustain 1 release 75ms
+    filter lowpass cutoff 6500hz resonance 0.65
+    reverb room mix 0.07
+instrument round_bass
+    type synth
+    oscillator triangle
+    envelope attack 6ms decay 140ms sustain 0.64 release 100ms
+    filter lowpass cutoff 1100hz resonance 0.65
+    distortion 0.25
+instrument deep_sub
+    type synth
+    oscillator sine
+    envelope attack 9ms decay 100ms sustain 0.9 release 100ms
+    filter lowpass cutoff 180hz resonance 0.6
+instrument luminous_pad
+    type synth
+    oscillator saw unison 3 detune 0.004
+    envelope attack 180ms decay 250ms sustain 0.55 release 650ms
+    filter lowpass cutoff 1900hz resonance 0.6
+    lfo rate 1/2 target filter.cutoff depth 170hz
+    reverb hall mix 0.12
+instrument prism_pluck
+    type synth
+    oscillator saw unison 2 detune 0.003
+    envelope attack 3ms decay 180ms sustain 0.2 release 170ms
+    filter lowpass cutoff 4200hz resonance 0.7
+    delay time 0.234375s feedback 0.24 mix 0.11
+    reverb room mix 0.06
+instrument neon_bass
+    type wavetable
+    oscillator saw unison 2 detune 0.002
+    envelope attack 4ms decay 170ms sustain 0.55 release 95ms
+    filter lowpass cutoff 800hz resonance 0.8
+    distortion 0.6
+instrument elastic_bass
+    type wavetable
+    oscillator square unison 2 detune 0.003
+    envelope attack 6ms decay 100ms sustain 0.62 release 90ms
+    filter lowpass cutoff 700hz resonance 1.1
+    lfo rate 1/8 target filter.cutoff depth 480hz
+    distortion 1.1
+instrument air_bell
+    type synth
+    oscillator sine
+    envelope attack 4ms decay 350ms sustain 0.25 release 500ms
+    filter lowpass cutoff 6500hz resonance 0.6
+    delay time 0.375s feedback 0.28 mix 0.13
+    reverb hall mix 0.12

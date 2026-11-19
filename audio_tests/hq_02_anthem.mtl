@@ -1,0 +1,194 @@
+// CodeRabbit generated arrangement of a public-domain melody.
+song "The Star-Spangled Banner - Brass and Strings"
+bpm 88
+time_signature 3/4
+sample_rate 48000
+bit_depth 24
+seed 102
+import "hq_instruments.mtl"
+pattern theme
+    length 31 bars
+    g4 on 1 hold 0.69 beats vel 0.640
+    e4 on 1.75 hold 0.23 beats vel 0.664
+    c4 on 2 hold 1.38 beats vel 0.688
+    e4 on 3.5 hold 0.46 beats vel 0.712
+    g4 on 4 hold 0.92 beats vel 0.736
+    c5 on 5 hold 1.84 beats vel 0.640
+    e5 on 7 hold 0.69 beats vel 0.664
+    d5 on 7.75 hold 0.23 beats vel 0.688
+    c5 on 8 hold 1.38 beats vel 0.712
+    e4 on 9.5 hold 0.46 beats vel 0.736
+    f#4 on 10 hold 0.92 beats vel 0.640
+    g4 on 11 hold 1.84 beats vel 0.664
+    g4 on 13 hold 0.46 beats vel 0.688
+    g4 on 13.5 hold 0.46 beats vel 0.712
+    e5 on 14 hold 1.38 beats vel 0.736
+    d5 on 15.5 hold 0.46 beats vel 0.640
+    c5 on 16 hold 0.92 beats vel 0.664
+    b4 on 17 hold 1.84 beats vel 0.688
+    a4 on 19 hold 0.46 beats vel 0.712
+    b4 on 19.5 hold 0.46 beats vel 0.736
+    c5 on 20 hold 1.38 beats vel 0.640
+    c5 on 21.5 hold 0.46 beats vel 0.664
+    g4 on 22 hold 0.92 beats vel 0.688
+    e4 on 23 hold 1.38 beats vel 0.712
+    c4 on 24.5 hold 0.46 beats vel 0.736
+    g4 on 25 hold 0.69 beats vel 0.640
+    e4 on 25.75 hold 0.23 beats vel 0.664
+    c4 on 26 hold 1.38 beats vel 0.688
+    e4 on 27.5 hold 0.46 beats vel 0.712
+    g4 on 28 hold 0.92 beats vel 0.736
+    c5 on 29 hold 1.84 beats vel 0.640
+    e5 on 31 hold 0.69 beats vel 0.664
+    d5 on 31.75 hold 0.23 beats vel 0.688
+    c5 on 32 hold 1.38 beats vel 0.712
+    e4 on 33.5 hold 0.46 beats vel 0.736
+    f#4 on 34 hold 0.92 beats vel 0.640
+    g4 on 35 hold 1.84 beats vel 0.664
+    g4 on 37 hold 0.46 beats vel 0.688
+    g4 on 37.5 hold 0.46 beats vel 0.712
+    e5 on 38 hold 1.38 beats vel 0.736
+    d5 on 39.5 hold 0.46 beats vel 0.640
+    c5 on 40 hold 0.92 beats vel 0.664
+    b4 on 41 hold 1.84 beats vel 0.688
+    a4 on 43 hold 0.46 beats vel 0.712
+    b4 on 43.5 hold 0.46 beats vel 0.736
+    c5 on 44 hold 0.92 beats vel 0.640
+    c5 on 45 hold 0.92 beats vel 0.664
+    b4 on 46 hold 0.46 beats vel 0.688
+    a4 on 46.5 hold 0.46 beats vel 0.712
+    a4 on 47 hold 1.38 beats vel 0.736
+    g4 on 48.5 hold 0.46 beats vel 0.640
+    e5 on 49 hold 0.46 beats vel 0.664
+    e5 on 49.5 hold 0.46 beats vel 0.688
+    e5 on 50 hold 0.92 beats vel 0.712
+    f5 on 51 hold 1.38 beats vel 0.736
+    e5 on 52.5 hold 0.46 beats vel 0.640
+    d5 on 53 hold 0.92 beats vel 0.664
+    d5 on 54 hold 0.92 beats vel 0.688
+    e5 on 55 hold 0.92 beats vel 0.712
+    e5 on 56 hold 0.92 beats vel 0.736
+    d5 on 57 hold 0.92 beats vel 0.640
+    c5 on 58 hold 0.92 beats vel 0.664
+    b4 on 59 hold 1.84 beats vel 0.688
+    a4 on 61 hold 0.46 beats vel 0.712
+    b4 on 61.5 hold 0.46 beats vel 0.736
+    c5 on 62 hold 0.92 beats vel 0.640
+    e4 on 63 hold 0.92 beats vel 0.664
+    f#4 on 64 hold 0.92 beats vel 0.688
+    g4 on 65 hold 1.84 beats vel 0.712
+    g4 on 67 hold 0.92 beats vel 0.736
+    c5 on 68 hold 0.92 beats vel 0.640
+    c5 on 69 hold 0.92 beats vel 0.664
+    c5 on 70 hold 0.92 beats vel 0.688
+    d5 on 71 hold 0.92 beats vel 0.712
+    e5 on 72 hold 1.84 beats vel 0.736
+    e5 on 74 hold 0.46 beats vel 0.640
+    d5 on 74.5 hold 0.46 beats vel 0.664
+    c5 on 75 hold 0.46 beats vel 0.688
+    b4 on 75.5 hold 0.46 beats vel 0.712
+    c5 on 76 hold 0.92 beats vel 0.736
+    c5 on 77 hold 1.84 beats vel 0.640
+    g4 on 79 hold 0.46 beats vel 0.664
+    g4 on 79.5 hold 0.46 beats vel 0.688
+    c5 on 80 hold 1.38 beats vel 0.712
+    d5 on 81.5 hold 0.46 beats vel 0.736
+    e5 on 82 hold 0.46 beats vel 0.640
+    f5 on 82.5 hold 0.46 beats vel 0.664
+    g5 on 83 hold 1.84 beats vel 0.688
+    c5 on 85 hold 0.46 beats vel 0.712
+    d5 on 85.5 hold 0.46 beats vel 0.736
+    e5 on 86 hold 1.38 beats vel 0.640
+    f5 on 87.5 hold 0.46 beats vel 0.664
+    d5 on 88 hold 0.92 beats vel 0.688
+    c5 on 89 hold 2.76 beats vel 0.712
+
+pattern harmony
+    length 31 bars
+    c3 e3 g3 on 1 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 4 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 7 hold 2.85 beats vel 0.400
+    d3 f#3 a3 on 10 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 13 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 16 hold 2.85 beats vel 0.400
+    f2 a2 c3 on 19 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 22 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 25 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 28 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 31 hold 2.85 beats vel 0.400
+    d3 f#3 a3 on 34 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 37 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 40 hold 2.85 beats vel 0.400
+    f2 a2 c3 on 43 hold 2.85 beats vel 0.400
+    g2 b2 d3 on 46 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 49 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 52 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 55 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 58 hold 2.85 beats vel 0.400
+    f2 a2 c3 on 61 hold 2.85 beats vel 0.400
+    d3 f#3 a3 on 64 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 67 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 70 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 73 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 76 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 79 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 82 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 85 hold 2.85 beats vel 0.400
+    g2 b2 d3 on 88 hold 2.85 beats vel 0.400
+    c3 e3 g3 on 91 hold 2.85 beats vel 0.400
+
+pattern foundation
+    length 31 bars
+    c2 on 1 hold 2.7 beats vel 0.400
+    c2 on 4 hold 2.7 beats vel 0.400
+    c2 on 7 hold 2.7 beats vel 0.400
+    d2 on 10 hold 2.7 beats vel 0.400
+    c2 on 13 hold 2.7 beats vel 0.400
+    c2 on 16 hold 2.7 beats vel 0.400
+    f1 on 19 hold 2.7 beats vel 0.400
+    c2 on 22 hold 2.7 beats vel 0.400
+    c2 on 25 hold 2.7 beats vel 0.400
+    c2 on 28 hold 2.7 beats vel 0.400
+    c2 on 31 hold 2.7 beats vel 0.400
+    d2 on 34 hold 2.7 beats vel 0.400
+    c2 on 37 hold 2.7 beats vel 0.400
+    c2 on 40 hold 2.7 beats vel 0.400
+    f1 on 43 hold 2.7 beats vel 0.400
+    g1 on 46 hold 2.7 beats vel 0.400
+    c2 on 49 hold 2.7 beats vel 0.400
+    c2 on 52 hold 2.7 beats vel 0.400
+    c2 on 55 hold 2.7 beats vel 0.400
+    c2 on 58 hold 2.7 beats vel 0.400
+    f1 on 61 hold 2.7 beats vel 0.400
+    d2 on 64 hold 2.7 beats vel 0.400
+    c2 on 67 hold 2.7 beats vel 0.400
+    c2 on 70 hold 2.7 beats vel 0.400
+    c2 on 73 hold 2.7 beats vel 0.400
+    c2 on 76 hold 2.7 beats vel 0.400
+    c2 on 79 hold 2.7 beats vel 0.400
+    c2 on 82 hold 2.7 beats vel 0.400
+    c2 on 85 hold 2.7 beats vel 0.400
+    g1 on 88 hold 2.7 beats vel 0.400
+    c2 on 91 hold 2.7 beats vel 0.400
+
+track melody instrument satin_brass pattern theme volume -7db pan -8
+track strings instrument chamber_bow pattern theme volume -19db pan 18
+track harmony instrument blue_drawbar pattern harmony volume -18db pan -15
+track bass instrument round_bass pattern foundation volume -17db
+section performance
+    length 31 bars
+    add melody
+    add strings
+    add harmony
+    add bass
+section tail
+    length 2 bars
+    remove all
+over 4 bars in performance
+    melody.volume from -11db to -7db
+    harmony.filter.cutoff from 2200hz to 6500hz
+humanize all tracks
+    timing ±4ms
+    velocity ±4%
+master
+    peak -3db
