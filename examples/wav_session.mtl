@@ -1,0 +1,28 @@
+// CodeRabbit generated example. Render instrument_showcase.mtl to colors.wav here first.
+song "WAV Session"
+bpm 100
+length 40 seconds
+import bank "general_midi"
+
+pattern chimes
+    length 2 bars
+    d5 on 1 hold 1 beat
+    a4 on 3 hold 1 beat
+    f5 on 5 hold 1 beat
+track mallets instrument gm_vibraphone pattern chimes volume -12db
+track recording
+    audio "colors.wav" at 0 seconds
+    volume -3db
+    pan -10
+    filter lowpass cutoff 12000hz
+    reverb room mix 0.08
+    delay time 0.3s feedback 0.2 mix 0.1
+
+section first
+    length 4 bars
+section answer
+    length 4 bars
+track overdub
+    audio "colors.wav" at section answer
+    volume -18db
+    pan 60

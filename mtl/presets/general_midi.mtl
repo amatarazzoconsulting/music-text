@@ -1,0 +1,714 @@
+// CodeRabbit generated synthesis presets. Original parameters; no sampled assets.
+// GM program numbers are zero based (0..127). Names/program map only; synthetic approximations.
+import "acoustic.mtl"
+import "organs.mtl"
+import "electronic.mtl"
+
+instrument gm_acoustic_grand_piano from acoustic_piano
+    program 0
+    filter lowpass cutoff 14000hz
+
+instrument gm_bright_acoustic_piano from acoustic_piano
+    program 1
+    filter lowpass cutoff 16000hz
+    hammer 0.85
+
+instrument gm_electric_grand_piano from acoustic_piano
+    program 2
+    filter lowpass cutoff 6400hz
+    type fm
+
+instrument gm_honky_tonk_piano from acoustic_piano
+    program 3
+    filter lowpass cutoff 12000hz
+    string_detune 7
+
+instrument gm_electric_piano_1 from acoustic_piano
+    program 4
+    filter lowpass cutoff 7300hz
+    type fm
+
+instrument gm_electric_piano_2 from acoustic_piano
+    program 5
+    filter lowpass cutoff 7750hz
+    type fm
+
+instrument gm_harpsichord from acoustic_piano
+    program 6
+    type pluck
+    filter lowpass cutoff 8200hz
+    envelope attack 1ms decay 110ms sustain 0.2 release 90ms
+
+instrument gm_clavinet from acoustic_piano
+    program 7
+    type pluck
+    filter lowpass cutoff 8650hz
+    envelope attack 1ms decay 110ms sustain 0.2 release 90ms
+
+instrument gm_celesta
+    program 8
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+
+instrument gm_glockenspiel
+    program 9
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+
+instrument gm_music_box
+    program 10
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+
+instrument gm_vibraphone from studio_vibes
+    program 11
+    filter lowpass cutoff 6850hz
+
+instrument gm_marimba
+    program 12
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+
+instrument gm_xylophone
+    program 13
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+
+instrument gm_tubular_bells
+    program 14
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+
+instrument gm_dulcimer
+    program 15
+    type vibes
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_drawbar_organ from jazz_drawbar
+    program 16
+    filter lowpass cutoff 5500hz
+
+instrument gm_percussive_organ from jazz_drawbar
+    program 17
+    filter lowpass cutoff 5950hz
+
+instrument gm_rock_organ from rock_drawbar
+    program 18
+    filter lowpass cutoff 6400hz
+
+instrument gm_church_organ from cathedral_organ
+    program 19
+    filter lowpass cutoff 6850hz
+
+instrument gm_reed_organ from soft_reed_organ
+    program 20
+    filter lowpass cutoff 7300hz
+
+instrument gm_accordion
+    program 21
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+
+instrument gm_harmonica
+    program 22
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+
+instrument gm_tango_accordion
+    program 23
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_nylon_guitar
+    program 24
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+
+instrument gm_steel_guitar
+    program 25
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+
+instrument gm_jazz_guitar
+    program 26
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+
+instrument gm_clean_guitar
+    program 27
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+
+instrument gm_muted_guitar
+    program 28
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+    envelope attack 1ms decay 110ms sustain 0.2 release 90ms
+
+instrument gm_overdriven_guitar
+    program 29
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+    distortion medium
+
+instrument gm_distortion_guitar
+    program 30
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+    distortion medium
+
+instrument gm_guitar_harmonics
+    program 31
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_acoustic_bass from focused_sub
+    program 32
+    filter lowpass cutoff 1800hz
+
+instrument gm_electric_bass_finger from focused_sub
+    program 33
+    filter lowpass cutoff 2450hz
+
+instrument gm_electric_bass_pick from focused_sub
+    program 34
+    filter lowpass cutoff 3100hz
+
+instrument gm_fretless_bass from focused_sub
+    program 35
+    filter lowpass cutoff 3750hz
+
+instrument gm_slap_bass_1 from focused_sub
+    program 36
+    filter lowpass cutoff 4400hz
+
+instrument gm_slap_bass_2 from focused_sub
+    program 37
+    filter lowpass cutoff 5050hz
+
+instrument gm_synth_bass_1 from focused_sub
+    program 38
+    filter lowpass cutoff 5700hz
+
+instrument gm_synth_bass_2 from focused_sub
+    program 39
+    filter lowpass cutoff 6350hz
+
+instrument gm_violin from solo_violin
+    program 40
+    filter lowpass cutoff 5500hz
+
+instrument gm_viola from solo_violin
+    program 41
+    filter lowpass cutoff 5950hz
+
+instrument gm_cello from solo_violin
+    program 42
+    filter lowpass cutoff 6400hz
+
+instrument gm_contrabass from solo_violin
+    program 43
+    filter lowpass cutoff 6850hz
+
+instrument gm_tremolo_strings from solo_violin
+    program 44
+    filter lowpass cutoff 7300hz
+
+instrument gm_pizzicato_strings
+    program 45
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+    type pluck
+
+instrument gm_orchestral_harp
+    program 46
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+
+instrument gm_timpani
+    program 47
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_string_ensemble_1 from solo_violin
+    program 48
+    filter lowpass cutoff 5500hz
+
+instrument gm_string_ensemble_2 from solo_violin
+    program 49
+    filter lowpass cutoff 5950hz
+
+instrument gm_synth_strings_1 from solo_violin
+    program 50
+    filter lowpass cutoff 6400hz
+
+instrument gm_synth_strings_2 from solo_violin
+    program 51
+    filter lowpass cutoff 6850hz
+
+instrument gm_choir_aahs
+    program 52
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+
+instrument gm_voice_oohs
+    program 53
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+
+instrument gm_synth_voice
+    program 54
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+
+instrument gm_orchestra_hit
+    program 55
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_trumpet from concert_trumpet
+    program 56
+    filter lowpass cutoff 5500hz
+
+instrument gm_trombone from concert_trumpet
+    program 57
+    filter lowpass cutoff 5950hz
+
+instrument gm_tuba from concert_trumpet
+    program 58
+    filter lowpass cutoff 6400hz
+
+instrument gm_muted_trumpet from concert_trumpet
+    program 59
+    filter lowpass cutoff 6850hz
+
+instrument gm_french_horn from concert_trumpet
+    program 60
+    filter lowpass cutoff 7300hz
+
+instrument gm_brass_section from concert_trumpet
+    program 61
+    filter lowpass cutoff 7750hz
+
+instrument gm_synth_brass_1 from concert_trumpet
+    program 62
+    filter lowpass cutoff 8200hz
+
+instrument gm_synth_brass_2 from concert_trumpet
+    program 63
+    filter lowpass cutoff 8650hz
+
+instrument gm_soprano_sax
+    program 64
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_alto_sax
+    program 65
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_tenor_sax
+    program 66
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_baritone_sax
+    program 67
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_oboe
+    program 68
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_english_horn
+    program 69
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_bassoon
+    program 70
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_clarinet
+    program 71
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+    type trumpet
+    vibrato rate 5hz depth 0.003
+
+instrument gm_piccolo
+    program 72
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_flute
+    program 73
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_recorder
+    program 74
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_pan_flute
+    program 75
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_blown_bottle
+    program 76
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_shakuhachi
+    program 77
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_whistle
+    program 78
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_ocarina
+    program 79
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+    oscillator sine
+    envelope attack 30ms decay 150ms sustain 0.8 release 120ms
+
+instrument gm_square_lead from cutting_lead
+    program 80
+    filter lowpass cutoff 5500hz
+    oscillator square
+
+instrument gm_saw_lead from cutting_lead
+    program 81
+    filter lowpass cutoff 5950hz
+
+instrument gm_calliope_lead from cutting_lead
+    program 82
+    filter lowpass cutoff 6400hz
+
+instrument gm_chiff_lead from cutting_lead
+    program 83
+    filter lowpass cutoff 6850hz
+
+instrument gm_charang_lead from cutting_lead
+    program 84
+    filter lowpass cutoff 7300hz
+
+instrument gm_voice_lead from cutting_lead
+    program 85
+    filter lowpass cutoff 7750hz
+
+instrument gm_fifths_lead from cutting_lead
+    program 86
+    filter lowpass cutoff 8200hz
+    distortion medium
+
+instrument gm_bass_lead from cutting_lead
+    program 87
+    filter lowpass cutoff 8650hz
+
+instrument gm_new_age_pad from velvet_pad
+    program 88
+    filter lowpass cutoff 5500hz
+
+instrument gm_warm_pad from velvet_pad
+    program 89
+    filter lowpass cutoff 5950hz
+
+instrument gm_polysynth_pad from velvet_pad
+    program 90
+    filter lowpass cutoff 6400hz
+
+instrument gm_choir_pad from velvet_pad
+    program 91
+    filter lowpass cutoff 6850hz
+
+instrument gm_bowed_pad from velvet_pad
+    program 92
+    filter lowpass cutoff 7300hz
+
+instrument gm_metallic_pad from velvet_pad
+    program 93
+    filter lowpass cutoff 7750hz
+
+instrument gm_halo_pad from velvet_pad
+    program 94
+    filter lowpass cutoff 8200hz
+
+instrument gm_sweep_pad from velvet_pad
+    program 95
+    filter lowpass cutoff 8650hz
+
+instrument gm_rain_fx
+    program 96
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+
+instrument gm_soundtrack_fx
+    program 97
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+
+instrument gm_crystal_fx
+    program 98
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+
+instrument gm_atmosphere_fx
+    program 99
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+
+instrument gm_brightness_fx
+    program 100
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+
+instrument gm_goblins_fx
+    program 101
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+
+instrument gm_echoes_fx
+    program 102
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+
+instrument gm_sci_fi_fx
+    program 103
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_sitar
+    program 104
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+
+instrument gm_banjo
+    program 105
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+
+instrument gm_shamisen
+    program 106
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+
+instrument gm_koto
+    program 107
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+
+instrument gm_kalimba
+    program 108
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+
+instrument gm_bagpipe
+    program 109
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+
+instrument gm_fiddle from solo_violin
+    program 110
+    filter lowpass cutoff 8200hz
+
+instrument gm_shanai
+    program 111
+    type pluck
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_tinkle_bell
+    program 112
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+
+instrument gm_agogo
+    program 113
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+
+instrument gm_steel_drums
+    program 114
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+
+instrument gm_woodblock
+    program 115
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+
+instrument gm_taiko_drum
+    program 116
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+
+instrument gm_melodic_tom
+    program 117
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+
+instrument gm_synth_drum
+    program 118
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+
+instrument gm_reverse_cymbal
+    program 119
+    type bell
+    envelope attack 3ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+
+instrument gm_guitar_fret_noise
+    program 120
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 3500hz
+    oscillator noise
+
+instrument gm_breath_noise
+    program 121
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4050hz
+    oscillator noise
+
+instrument gm_seashore
+    program 122
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 4600hz
+    oscillator noise
+
+instrument gm_bird_tweet
+    program 123
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5150hz
+
+instrument gm_telephone_ring
+    program 124
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 5700hz
+
+instrument gm_helicopter
+    program 125
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6250hz
+    oscillator noise
+
+instrument gm_applause
+    program 126
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 6800hz
+    oscillator noise
+
+instrument gm_gunshot
+    program 127
+    type synth
+    envelope attack 25ms decay 300ms sustain 0.6 release 200ms
+    filter lowpass cutoff 7350hz
+    oscillator noise

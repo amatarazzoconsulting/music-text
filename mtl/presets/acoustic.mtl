@@ -1,0 +1,26 @@
+// CodeRabbit generated synthesis presets. Original parameters; no sampled assets.
+instrument concert_trumpet
+    type trumpet
+    envelope attack 35ms decay 170ms sustain 0.82 release 180ms
+    filter lowpass cutoff 9000hz resonance 0.65
+    vibrato rate 5.3hz depth 0.0025
+    reverb room mix 0.08
+instrument solo_violin
+    type violin
+    envelope attack 110ms decay 250ms sustain 0.85 release 280ms
+    filter lowpass cutoff 8200hz resonance 0.6
+    vibrato rate 5.8hz depth 0.004
+    reverb hall mix 0.10
+instrument studio_vibes
+    type vibes
+    envelope attack 2ms decay 800ms sustain 0.75 release 900ms
+    filter lowpass cutoff 10000hz
+    vibrato rate 5.5hz depth 0
+    reverb room mix 0.10
+instrument acoustic_piano
+    type piano
+    envelope attack 1ms decay 40ms sustain 1 release 350ms
+    filter lowpass cutoff 14000hz
+    hammer 0.5
+    soundboard 0.35
+    string_detune 0.7

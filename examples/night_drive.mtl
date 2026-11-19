@@ -1,0 +1,74 @@
+song "Night Drive"
+bpm 112
+time_signature 4/4
+seed 42
+output "night_drive.wav"
+
+instrument bass
+    oscillator saw
+    warm and slightly distorted
+    filter lowpass cutoff 900hz resonance 0.8
+    envelope attack 3ms decay 120ms sustain 0.5 release 100ms
+
+instrument lead
+    type fm
+    bright and smooth
+    envelope attack 8ms decay 250ms sustain 0.4 release 300ms
+    delay time 0.267s feedback 0.35 mix 0.18
+
+instrument pad
+    oscillator triangle unison 3 detune 0.008
+    envelope attack 200ms decay 400ms sustain 0.7 release 800ms
+    filter lowpass cutoff 2400hz
+    reverb hall mix 0.25
+
+pattern beat
+    kick on 1, 2, 3, 4 vel 0.9, 0.75, 0.85, 0.75
+    snare on 2, 4 vel 0.7
+    hihat every 1/8 vel 0.45
+
+pattern bassline
+    c2 on 1 hold 0.75 beats
+    c2 on 2.5 hold 0.25 beats
+    g2 on 3 hold 0.5 beats
+    bb1 on 4 hold 0.5 beats
+
+pattern melody
+    length 2 bars
+    c4 on 1 hold 0.5 beats
+    eb4 on 2 hold 0.5 beats
+    g4 on 3.5 hold 1 beat
+    bb4 on 5 hold 0.5 beats
+    g4 on 6 hold 0.5 beats
+    eb4 on 7 hold 1 beat
+
+pattern harmony
+    play c minor for 4 beats
+    play ab major for 4 beats
+
+track drums instrument drums pattern beat volume -6db
+track bass instrument bass pattern bassline volume -7db
+track lead instrument lead pattern melody volume -10db pan 15
+track pad instrument pad pattern harmony volume -14db pan -20
+
+section intro
+    length 2 bars
+    pad only
+section verse
+    length 4 bars
+    add drums
+    add bass
+section chorus
+    length 4 bars
+    add lead
+section outro
+    length 2 bars
+    remove drums
+    remove bass
+    remove lead
+
+humanize all tracks
+    timing ±3ms
+    velocity ±3%
+master
+    peak -1db

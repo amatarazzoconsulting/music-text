@@ -1,0 +1,23 @@
+// CodeRabbit generated synthesis presets. Original parameters; no sampled assets.
+instrument jazz_drawbar
+    type organ
+    drawbars 8 8 8 0 0 0 0 0 0
+    rotary 0.8
+    percussion 0.22
+    vibrato rate 6hz depth 0.001
+    envelope attack 3ms decay 10ms sustain 1 release 45ms
+    filter lowpass cutoff 10000hz
+instrument rock_drawbar from jazz_drawbar
+    drawbars 8 8 8 8 6 4 4 2 1
+    rotary 5.8
+    distortion light
+instrument cathedral_organ from jazz_drawbar
+    drawbars 8 0 8 8 0 8 0 0 8
+    rotary 0
+    percussion 0
+    envelope attack 35ms decay 10ms sustain 1 release 550ms
+    reverb cathedral mix 0.22
+instrument soft_reed_organ from jazz_drawbar
+    drawbars 0 0 8 3 6 1 4 0 2
+    percussion 0
+    rotary 0.4

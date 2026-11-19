@@ -1,0 +1,20 @@
+// CodeRabbit generated synthesis presets. Original parameters; no sampled assets.
+instrument velvet_pad
+    oscillator saw unison 5 detune 0.007
+    filter lowpass cutoff 2600hz resonance 0.65
+    envelope attack 300ms decay 700ms sustain 0.65 release 1100ms
+    reverb hall mix 0.20
+instrument focused_sub
+    oscillator sine
+    envelope attack 6ms decay 120ms sustain 0.8 release 80ms
+    filter lowpass cutoff 350hz
+instrument cutting_lead
+    oscillator saw unison 5 detune 0.012
+    envelope attack 5ms decay 200ms sustain 0.65 release 180ms
+    filter lowpass cutoff 6500hz resonance 0.8
+    delay time 0.25s feedback 0.3 mix 0.16
+instrument moving_bass
+    oscillator square unison 3 detune 0.008
+    filter lowpass cutoff 1200hz resonance 0.9
+    lfo rate 1/8 target filter.cutoff depth 900hz
+    distortion medium

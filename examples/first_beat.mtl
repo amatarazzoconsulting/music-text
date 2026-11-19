@@ -1,0 +1,13 @@
+song "My First Beat"
+bpm 90
+length 4 bars
+kick deep and punchy with a sharp click
+snare tight and bright with metal shell
+hihat sharp and short, closed
+
+drums
+    kick on 1 and 3
+    snare on 2 and 4
+    hihat every 1/8
+
+output "first_beat.wav"

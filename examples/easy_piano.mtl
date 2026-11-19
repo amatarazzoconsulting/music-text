@@ -1,0 +1,65 @@
+// CodeRabbit generated original composition: "Window Light".
+// Instrument names, notes and durations use the forgiving entry syntax.
+song "Window Light"
+tempo about eighty four bpm
+length 9 bars
+sample_rate 44100
+seed 26
+
+piano
+    volume -3 dB
+    reverb hall mix 0.12
+    chord c3 e3 g3 b3 for four beats vel 68 percent
+    chord a2 e3 g3 b3 for four beats vel 62 percent
+    chord d3 f3 a3 c4 for four beats vel 70 percent
+    chord g2 f3 a3 b3 for four beats vel 65 percent
+    chord e3 g3 b3 d4 for four beats vel 66 percent
+    chord a2 e3 g3 c4 for four beats vel 72 percent
+    chord d3 f3 a3 c4 for two beats vel 64 percent
+    chord g2 f3 a3 b3 for two beats vel 70 percent
+    chord c3 e3 g3 b3 d4 for four beats vel 58 percent
+
+track melody
+    instrument acoustic grand piano
+    volume -2 dB
+    pan slightly right
+    reverb hall mix 0.10
+    e5 on 1 hold one and a half beats vel 78 percent
+    g5 on 2.5 hold half a beat vel 62 percent
+    b5 on 3 hold a beat vel 74 percent
+    a5 on 4 hold half a beat vel 60 percent
+    g5 on 5 hold one and a half beats vel 72 percent
+    e5 on 6.5 hold half a beat vel 56 percent
+    d5 on 7 hold a beat vel 65 percent
+    c5 on 8 hold half a beat vel 58 percent
+    f5 on 9 hold one and a half beats vel 76 percent
+    a5 on 10.5 hold half a beat vel 61 percent
+    e5 on 11 hold a beat vel 70 percent
+    d5 on 12 hold half a beat vel 57 percent
+    b4 on 13 hold a beat vel 65 percent
+    d5 on 14 hold half a beat vel 62 percent
+    g5 on 15 hold one and a half beats vel 78 percent
+    f5 on 16.5 hold half a beat vel 55 percent
+    e5 on 17 hold one and a half beats vel 73 percent
+    g5 on 18.5 hold half a beat vel 60 percent
+    d6 on 19 hold a beat vel 76 percent
+    b5 on 20 hold half a beat vel 58 percent
+    c6 on 21 hold one and a half beats vel 80 percent
+    b5 on 22.5 hold half a beat vel 64 percent
+    g5 on 23 hold a beat vel 70 percent
+    e5 on 24 hold half a beat vel 58 percent
+    a5 on 25 hold a beat vel 74 percent
+    f5 on 26 hold half a beat vel 60 percent
+    d5 on 27 hold half a beat vel 64 percent
+    b4 on 28 hold half a beat vel 57 percent
+    e5 on 29 hold half a beat vel 65 percent
+    g5 on 29.5 hold half a beat vel 59 percent
+    b5 on 30 hold half a beat vel 62 percent
+    c6 on 30.5 hold one and a half beats vel 70 percent
+
+// Keep the last bar for the release instead of restarting the patterns.
+section performance
+    length eight bars
+section release
+    length one bar
+    remove all

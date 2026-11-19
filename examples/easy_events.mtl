@@ -1,0 +1,18 @@
+// CodeRabbit generated shorthand and note-relative timing example.
+song "A Friendly Conversation"
+tempo around 108 bpm
+length four bars
+piano
+    c4 for two beats
+    e4 for one beat
+    g4 for one beat
+vibraphone
+    volume -10 dB
+    e5 at 50 percent of piano note one hold half a beat
+    g5 after previous note hold half a beat
+    c6 at end of piano note two minus half a beat
+
+drums house
+humanize all tracks
+    timing ±3 ms
+    velocity ±3 percent

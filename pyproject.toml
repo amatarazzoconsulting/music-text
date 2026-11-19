@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "music-text-language"
+version = "0.1.0"
+description = "Deterministic text song compiler and offline WAV synthesizer"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0,<3", "scipy>=1.14,<2"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+mtl = "mtl.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["mtl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.package-data]
+mtl = ["presets/*.mtl"]
