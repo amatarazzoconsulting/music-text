@@ -1,0 +1,273 @@
+song "Black and Tan Fantasy - Small Combo Arrangement"
+bpm 90
+time_signature 4/4
+sample_rate 48000
+bit_depth 24
+seed 1927
+output "black_and_tan_fantasy.wav"
+
+instrument piano
+    soundfont "assets/GeneralUser-GS.sf2" preset "Grand Piano"
+    envelope release 280ms
+    reverb room mix 0.07
+
+instrument upright_bass
+    soundfont "assets/GeneralUser-GS.sf2" preset "Acoustic Bass"
+    envelope release 100ms
+
+instrument muted_trumpet
+    soundfont "assets/GeneralUser-GS.sf2" preset "Muted Trumpet"
+    envelope release 220ms
+    reverb room mix 0.075
+
+instrument trombone
+    soundfont "assets/GeneralUser-GS.sf2" preset "Trombone"
+    envelope release 250ms
+    reverb room mix 0.06
+
+instrument clarinet
+    soundfont "assets/GeneralUser-GS.sf2" preset "Clarinet"
+    envelope release 180ms
+    reverb room mix 0.07
+
+instrument brushes
+    soundfont "assets/GeneralUser-GS.sf2" preset "Brush Kit"
+    envelope release 380ms
+
+pattern intro_voicing
+    length 4 bars
+    swing 57
+    chord c3 eb3 g3 a3 on 1 hold 3.6 beats vel 0.56
+    chord c3 eb3 g3 bb3 on 5 hold 3.6 beats vel 0.43
+    chord f2 ab2 c3 eb3 on 9 hold 3.6 beats vel 0.5
+    chord c3 eb3 g3 a3 on 13 hold 3.6 beats vel 0.46
+
+pattern comp
+    length 12 bars
+    swing 58
+    chord c3 eb3 g3 a3 on 2,4 hold 0.48 beats vel 0.62,0.39
+    chord c3 eb3 g3 bb3 on 6,8 hold 0.48 beats vel 0.51,0.36
+    chord c3 eb3 g3 a3 on 10,12 hold 0.48 beats vel 0.6,0.38
+    chord c3 eb3 g3 bb3 on 14,16 hold 0.48 beats vel 0.5,0.35
+    chord f2 ab2 c3 eb3 on 18,20 hold 0.48 beats vel 0.64,0.4
+    chord f2 ab2 c3 e3 on 22,24 hold 0.48 beats vel 0.53,0.36
+    chord c3 eb3 g3 a3 on 26,28 hold 0.48 beats vel 0.62,0.39
+    chord c3 eb3 g3 bb3 on 30,32 hold 0.48 beats vel 0.5,0.35
+    chord ab2 c3 eb3 gb3 on 34,36 hold 0.48 beats vel 0.63,0.39
+    chord g2 b2 d3 f3 on 38,40 hold 0.48 beats vel 0.66,0.42
+    chord c3 eb3 g3 a3 on 42,44 hold 0.48 beats vel 0.62,0.4
+    chord g2 b2 d3 f3 on 46,48 hold 0.48 beats vel 0.57,0.38
+
+pattern walking_bass
+    length 12 bars
+    c2 on 1 hold 0.82 beats vel 0.78
+    g2 on 2 hold 0.82 beats vel 0.58
+    a2 on 3 hold 0.82 beats vel 0.63
+    b2 on 4 hold 0.82 beats vel 0.56
+    c2 on 5 hold 0.82 beats vel 0.72
+    g2 on 6 hold 0.82 beats vel 0.56
+    bb2 on 7 hold 0.82 beats vel 0.62
+    b2 on 8 hold 0.82 beats vel 0.55
+    c2 on 9 hold 0.82 beats vel 0.76
+    eb2 on 10 hold 0.82 beats vel 0.57
+    g2 on 11 hold 0.82 beats vel 0.63
+    a2 on 12 hold 0.82 beats vel 0.56
+    c2 on 13 hold 0.82 beats vel 0.74
+    g2 on 14 hold 0.82 beats vel 0.57
+    d2 on 15 hold 0.82 beats vel 0.62
+    b1 on 16 hold 0.82 beats vel 0.55
+    f2 on 17 hold 0.82 beats vel 0.79
+    c3 on 18 hold 0.82 beats vel 0.59
+    d3 on 19 hold 0.82 beats vel 0.65
+    e2 on 20 hold 0.82 beats vel 0.56
+    f2 on 21 hold 0.82 beats vel 0.73
+    ab2 on 22 hold 0.82 beats vel 0.58
+    c3 on 23 hold 0.82 beats vel 0.64
+    b2 on 24 hold 0.82 beats vel 0.55
+    c2 on 25 hold 0.82 beats vel 0.77
+    g2 on 26 hold 0.82 beats vel 0.57
+    a2 on 27 hold 0.82 beats vel 0.63
+    b2 on 28 hold 0.82 beats vel 0.56
+    c2 on 29 hold 0.82 beats vel 0.72
+    g2 on 30 hold 0.82 beats vel 0.56
+    d2 on 31 hold 0.82 beats vel 0.62
+    b1 on 32 hold 0.82 beats vel 0.55
+    ab1 on 33 hold 0.82 beats vel 0.76
+    eb2 on 34 hold 0.82 beats vel 0.57
+    f2 on 35 hold 0.82 beats vel 0.63
+    gb2 on 36 hold 0.82 beats vel 0.55
+    g1 on 37 hold 0.82 beats vel 0.8
+    d2 on 38 hold 0.82 beats vel 0.59
+    f2 on 39 hold 0.82 beats vel 0.65
+    b1 on 40 hold 0.82 beats vel 0.57
+    c2 on 41 hold 0.82 beats vel 0.77
+    g2 on 42 hold 0.82 beats vel 0.58
+    a2 on 43 hold 0.82 beats vel 0.64
+    b2 on 44 hold 0.82 beats vel 0.56
+    g1 on 45 hold 0.82 beats vel 0.76
+    d2 on 46 hold 0.82 beats vel 0.57
+    f2 on 47 hold 0.82 beats vel 0.63
+    b1 on 48 hold 0.82 beats vel 0.55
+
+pattern trumpet_theme
+    length 12 bars
+    swing 59
+    c5 on 1.5 hold 0.65 beats vel 0.58
+    eb5 on 2.5 hold 0.58 beats vel 0.62
+    g5 on 3.5 hold 0.9 beats vel 0.72
+    bb4 on 5.5 hold 0.55 beats vel 0.55
+    g4 on 6.5 hold 0.65 beats vel 0.51
+    eb5 on 8.5 hold 0.82 beats vel 0.68
+    c5 on 10.5 hold 0.55 beats vel 0.6
+    b4 on 11.5 hold 0.45 beats vel 0.54
+    c5 on 12.5 hold 0.9 beats vel 0.74
+    g4 on 14.5 hold 0.6 beats vel 0.55
+    eb5 on 15.5 hold 0.82 beats vel 0.69
+    c5 on 17.5 hold 0.65 beats vel 0.64
+    ab4 on 18.5 hold 0.55 beats vel 0.58
+    c5 on 19.5 hold 0.9 beats vel 0.72
+    eb5 on 21.5 hold 0.58 beats vel 0.67
+    c5 on 22.5 hold 0.7 beats vel 0.61
+    g4 on 24.5 hold 0.82 beats vel 0.57
+    c5 on 25.5 hold 0.65 beats vel 0.64
+    eb5 on 26.5 hold 0.58 beats vel 0.68
+    g5 on 27.5 hold 0.9 beats vel 0.78
+    bb4 on 29.5 hold 0.55 beats vel 0.62
+    d5 on 30.5 hold 0.65 beats vel 0.69
+    f5 on 31.5 hold 0.82 beats vel 0.77
+    b4 on 33.5 hold 0.55 beats vel 0.59
+    d5 on 34.5 hold 0.6 beats vel 0.66
+    g5 on 35.5 hold 0.9 beats vel 0.78
+    f5 on 37.5 hold 0.58 beats vel 0.7
+    d5 on 38.5 hold 0.6 beats vel 0.66
+    b4 on 39.5 hold 0.82 beats vel 0.6
+    c5 on 41.5 hold 0.65 beats vel 0.68
+    eb5 on 42.5 hold 0.58 beats vel 0.72
+    g5 on 43.5 hold 0.9 beats vel 0.82
+    d5 on 45.5 hold 0.58 beats vel 0.7
+    b4 on 46.5 hold 0.55 beats vel 0.63
+    c5 on 47.5 hold 0.9 beats vel 0.79
+
+pattern clarinet_response
+    length 12 bars
+    swing 59
+    g4 on 4.5 hold 0.38 beats vel 0.39
+    a4 on 5 hold 0.38 beats vel 0.43
+    bb4 on 5.5 hold 0.45 beats vel 0.48
+    c5 on 7.5 hold 0.42 beats vel 0.44
+    bb4 on 8 hold 0.42 beats vel 0.4
+    g4 on 8.5 hold 0.58 beats vel 0.45
+    eb4 on 12.5 hold 0.38 beats vel 0.41
+    g4 on 13 hold 0.38 beats vel 0.44
+    bb4 on 13.5 hold 0.48 beats vel 0.5
+    d5 on 16.5 hold 0.42 beats vel 0.47
+    c5 on 17 hold 0.42 beats vel 0.42
+    ab4 on 17.5 hold 0.58 beats vel 0.46
+    f4 on 20.5 hold 0.38 beats vel 0.43
+    ab4 on 21 hold 0.38 beats vel 0.47
+    c5 on 21.5 hold 0.48 beats vel 0.53
+    eb5 on 24.5 hold 0.42 beats vel 0.49
+    d5 on 25 hold 0.42 beats vel 0.45
+    c5 on 25.5 hold 0.58 beats vel 0.5
+    g4 on 28.5 hold 0.38 beats vel 0.42
+    bb4 on 29 hold 0.38 beats vel 0.47
+    d5 on 29.5 hold 0.48 beats vel 0.55
+    f5 on 32.5 hold 0.42 beats vel 0.5
+    d5 on 33 hold 0.42 beats vel 0.46
+    b4 on 33.5 hold 0.58 beats vel 0.5
+    c5 on 36.5 hold 0.38 beats vel 0.46
+    eb5 on 37 hold 0.38 beats vel 0.5
+    g5 on 37.5 hold 0.48 beats vel 0.58
+    f5 on 40.5 hold 0.42 beats vel 0.52
+    d5 on 41 hold 0.42 beats vel 0.48
+    c5 on 41.5 hold 0.58 beats vel 0.53
+    eb5 on 44.5 hold 0.38 beats vel 0.5
+    d5 on 45 hold 0.38 beats vel 0.48
+    b4 on 45.5 hold 0.48 beats vel 0.55
+
+pattern trombone_answers
+    length 12 bars
+    swing 57
+    chord c3 eb3 on 4 hold 0.7 beats vel 0.42
+    chord c3 g3 on 8 hold 0.7 beats vel 0.38
+    chord f2 ab2 on 20 hold 0.8 beats vel 0.45
+    chord f2 c3 on 24 hold 0.7 beats vel 0.39
+    chord c3 eb3 on 28 hold 0.7 beats vel 0.42
+    chord c3 g3 on 32 hold 0.7 beats vel 0.39
+    chord ab2 c3 on 36 hold 0.75 beats vel 0.46
+    chord g2 b2 on 40 hold 0.85 beats vel 0.5
+    chord c3 eb3 on 44 hold 0.7 beats vel 0.45
+    chord g2 b2 on 48 hold 0.9 beats vel 0.48
+
+pattern brush_groove
+    length 12 bars
+    swing 58
+    kick on 1,5,9,13,17,21,25,29,33,37,41,45 vel 0.65,0.58,0.62,0.61,0.69,0.6,0.64,0.59,0.67,0.62,0.65,0.7
+    kick on 3,7,11,15,19,23,27,31,35,39,43,47 vel 0.35,0.31,0.34,0.3,0.38,0.32,0.35,0.31,0.37,0.34,0.36,0.4
+    snare on 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48 vel 0.32,0.42,0.29,0.39,0.31,0.41,0.3,0.4,0.33,0.43,0.3,0.4,0.34,0.44,0.31,0.41,0.34,0.45,0.32,0.42,0.35,0.46,0.33,0.48
+    ride every 1/4 vel 0.3
+    hihat every 1/8 vel 0.12
+
+pattern coda_voicing
+    length 4 bars
+    chord c3 eb3 g3 a3 on 1 hold 3.8 beats vel 0.52
+    chord ab2 c3 eb3 gb3 on 5 hold 3.8 beats vel 0.46
+    chord g2 b2 d3 f3 on 9 hold 3.8 beats vel 0.44
+    chord c3 eb3 g3 on 13 hold 3.8 beats vel 0.48
+
+pattern coda_line
+    length 4 bars
+    c5 on 1 hold 1.7 beats vel 0.6
+    bb4 on 3 hold 1.7 beats vel 0.53
+    g4 on 5 hold 1.7 beats vel 0.49
+    eb4 on 7 hold 1.7 beats vel 0.46
+    d4 on 9 hold 1.7 beats vel 0.45
+    c4 on 11 hold 2.8 beats vel 0.56
+
+track piano_intro instrument piano pattern intro_voicing volume -7db pan -12
+track piano_comp instrument piano pattern comp volume -5db pan -12
+track piano_coda instrument piano pattern coda_voicing volume -7db pan -12
+track bass instrument upright_bass pattern walking_bass volume -6db
+track muted_theme instrument muted_trumpet pattern trumpet_theme volume -6db pan 12
+track clarinet_fill instrument clarinet pattern clarinet_response volume -10db pan -16
+track low_brass instrument trombone pattern trombone_answers volume -9db pan -6
+track brush_kit instrument brushes pattern brush_groove volume -8db
+track trumpet_coda instrument muted_trumpet pattern coda_line volume -8db pan 12
+track trombone_coda instrument trombone pattern coda_line volume -11db pan -8
+
+section introduction
+    length 4 bars
+    only piano_intro
+section statement_one
+    length 12 bars
+    only piano_comp
+    add bass
+    add brush_kit
+    add muted_theme
+    add low_brass
+section statement_two
+    length 12 bars
+    only piano_comp
+    add bass
+    add brush_kit
+    add muted_theme
+    add clarinet_fill
+    add low_brass
+section coda
+    length 4 bars
+    only piano_coda
+    add trumpet_coda
+    add trombone_coda
+over 4 bars in coda
+    piano_coda.volume from -7db to -24db
+    trumpet_coda.volume from -8db to -28db
+    trombone_coda.volume from -11db to -30db
+section tail
+    length 1 bar
+    remove all
+
+humanize all tracks
+    timing ±4ms
+    velocity ±3%
+master
+    peak -2db
