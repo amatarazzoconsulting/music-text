@@ -24,3 +24,83 @@ instrument acoustic_piano
     hammer 0.5
     soundboard 0.35
     string_detune 0.7
+
+instrument felt_keys from acoustic_piano
+    envelope attack 8ms decay 180ms sustain 0.74 release 650ms
+    hammer 0.18
+    soundboard 0.58
+    string_detune 0.35
+    pedal 0.12
+    filter lowpass cutoff 7200hz
+
+instrument silver_grand from acoustic_piano
+    envelope attack 1ms decay 60ms sustain 0.92 release 420ms
+    hammer 0.82
+    soundboard 0.62
+    string_detune 1.1
+    stereo_width 0.9
+
+instrument honey_upright from acoustic_piano
+    envelope attack 4ms decay 80ms sustain 0.8 release 240ms
+    hammer 0.36
+    soundboard 0.72
+    string_detune 1.6
+    stereo_width 0.42
+    filter lowpass cutoff 6200hz
+
+instrument dusky_trumpet from concert_trumpet
+    envelope attack 70ms decay 220ms sustain 0.72 release 260ms
+    filter lowpass cutoff 5400hz resonance 0.8
+    vibrato rate 4.8hz depth 0.0014
+    reverb room mix 0.12
+
+instrument bright_fanfare from concert_trumpet
+    envelope attack 12ms decay 140ms sustain 0.88 release 220ms
+    filter lowpass cutoff 12000hz resonance 0.48
+    vibrato rate 5.7hz depth 0.0032
+    reverb hall mix 0.14
+
+instrument willow_violin from solo_violin
+    envelope attack 180ms decay 350ms sustain 0.78 release 500ms
+    filter lowpass cutoff 6100hz resonance 0.52
+    vibrato rate 5.1hz depth 0.0025
+    reverb hall mix 0.18
+
+instrument amber_cello
+    type violin
+    envelope attack 220ms decay 400ms sustain 0.9 release 650ms
+    filter lowpass cutoff 3900hz resonance 0.72
+    vibrato rate 4.4hz depth 0.0018
+    reverb room mix 0.13
+
+instrument reed_viola
+    type violin
+    envelope attack 95ms decay 280ms sustain 0.82 release 380ms
+    filter lowpass cutoff 5200hz resonance 0.88
+    vibrato rate 5.5hz depth 0.003
+    reverb room mix 0.1
+
+instrument cloud_vibes from studio_vibes
+    envelope attack 18ms decay 1200ms sustain 0.48 release 1100ms
+    filter lowpass cutoff 7600hz resonance 0.55
+    vibrato rate 4.8hz depth 0.0007
+    reverb hall mix 0.22
+
+instrument bell_vibes from studio_vibes
+    envelope attack 1ms decay 550ms sustain 0.3 release 700ms
+    filter lowpass cutoff 14500hz resonance 0.42
+    vibrato rate 6.2hz depth 0.001
+    reverb plate mix 0.14
+
+instrument nylon_pluck
+    type pluck
+    envelope attack 2ms decay 420ms sustain 0.22 release 260ms
+    filter lowpass cutoff 6800hz resonance 0.55
+    reverb room mix 0.09
+
+instrument cedar_pluck
+    type pluck
+    envelope attack 8ms decay 800ms sustain 0.34 release 480ms
+    filter lowpass cutoff 4200hz resonance 0.42
+    chorus rate 0.18hz depth 0.0015 mix 0.12
+    reverb hall mix 0.14

@@ -1,0 +1,136 @@
+song "Five Lanterns"
+bpm 106
+time_signature 5/4
+key d minor
+seed 53
+output "five_lanterns.wav"
+import bank "acoustic"
+
+pattern piano_comp
+    length 4 bars
+    d3 f3 a3 c4 on 1 hold 1.8 beats vel 0.58
+    d3 f3 a3 c4 on 3.5 hold 1.2 beats vel 0.43
+    g2 b2 d3 f3 on 6 hold 1.8 beats vel 0.55
+    g2 b2 d3 f3 on 8.5 hold 1.2 beats vel 0.42
+    c3 e3 g3 b3 on 11 hold 1.8 beats vel 0.56
+    c3 e3 g3 b3 on 13.5 hold 1.2 beats vel 0.42
+    a2 c3 e3 g3 on 16 hold 1.8 beats vel 0.54
+    a2 c3 e3 g3 on 18.5 hold 1.2 beats vel 0.4
+
+pattern walking_line
+    length 4 bars
+    d2 on 1 hold 0.8 beats vel 0.72
+    f2 on 2 hold 0.8 beats vel 0.58
+    a2 on 3 hold 0.8 beats vel 0.63
+    c3 on 4 hold 0.8 beats vel 0.57
+    e2 on 5 hold 0.8 beats vel 0.66
+    g1 on 6 hold 0.8 beats vel 0.71
+    b1 on 7 hold 0.8 beats vel 0.58
+    d2 on 8 hold 0.8 beats vel 0.63
+    f2 on 9 hold 0.8 beats vel 0.57
+    a2 on 10 hold 0.8 beats vel 0.66
+    c2 on 11 hold 0.8 beats vel 0.71
+    e2 on 12 hold 0.8 beats vel 0.58
+    g2 on 13 hold 0.8 beats vel 0.63
+    b2 on 14 hold 0.8 beats vel 0.57
+    d2 on 15 hold 0.8 beats vel 0.66
+    a1 on 16 hold 0.8 beats vel 0.71
+    c#2 on 17 hold 0.8 beats vel 0.58
+    e2 on 18 hold 0.8 beats vel 0.63
+    g2 on 19 hold 0.8 beats vel 0.57
+    b2 on 20 hold 0.8 beats vel 0.65
+
+pattern brush_five
+    length 1 bar
+    kick on 1 vel 0.48
+    snare on 4 vel 0.42
+    hihat every 1/8 vel 0.24
+
+pattern lantern_theme
+    length 4 bars
+    a4 on 1.5 hold 0.7 beats vel 0.62
+    d5 on 2.5 hold 0.9 beats vel 0.69
+    f5 on 4 hold 0.65 beats vel 0.74
+    e5 on 5 hold 0.85 beats vel 0.58
+    g4 on 6 hold 0.75 beats vel 0.61
+    b4 on 7.5 hold 0.8 beats vel 0.69
+    d5 on 8.5 hold 0.7 beats vel 0.76
+    c5 on 10 hold 0.85 beats vel 0.6
+    e4 on 11 hold 0.7 beats vel 0.58
+    g4 on 12 hold 0.8 beats vel 0.65
+    c5 on 14 hold 0.75 beats vel 0.73
+    b4 on 15.5 hold 0.8 beats vel 0.61
+    c#5 on 16 hold 0.7 beats vel 0.6
+    e5 on 17.5 hold 0.8 beats vel 0.7
+    g5 on 19 hold 0.7 beats vel 0.76
+    e5 on 20 hold 0.65 beats vel 0.57
+
+pattern bridge_theme
+    length 4 bars
+    f4 on 1 hold 1.1 beats vel 0.55
+    a4 on 2.5 hold 0.7 beats vel 0.66
+    c5 on 4 hold 0.8 beats vel 0.7
+    d5 on 5 hold 0.6 beats vel 0.59
+    e4 on 6 hold 0.9 beats vel 0.56
+    g4 on 7.5 hold 0.8 beats vel 0.64
+    b4 on 9 hold 0.75 beats vel 0.72
+    a4 on 10 hold 0.65 beats vel 0.58
+    d4 on 11 hold 1.0 beats vel 0.56
+    f4 on 13 hold 0.75 beats vel 0.65
+    a4 on 14.5 hold 0.8 beats vel 0.7
+    c5 on 16 hold 0.7 beats vel 0.59
+    b4 on 17 hold 0.8 beats vel 0.64
+    g4 on 18.5 hold 0.8 beats vel 0.7
+    e4 on 20 hold 0.65 beats vel 0.55
+
+pattern coda_theme
+    length 2 bars
+    a4 on 1 hold 1.4 beats vel 0.48
+    f4 on 3 hold 1.2 beats vel 0.43
+    e4 on 6 hold 1.4 beats vel 0.4
+    d4 on 8 hold 1.5 beats vel 0.35
+
+track piano instrument acoustic_piano pattern piano_comp volume -12db pan -14
+track bass instrument bass pattern walking_line volume -9db
+track brushes instrument drums pattern brush_five volume -13db
+track vibes instrument studio_vibes pattern lantern_theme volume -10db pan 18
+track bridge_vibes instrument studio_vibes pattern bridge_theme volume -11db pan 18
+track coda_vibes instrument studio_vibes pattern coda_theme volume -12db pan 18
+
+section opening
+    length 2 bars
+    only piano
+    add bass
+
+section theme
+    length 8 bars
+    only all
+
+section interlude
+    length 4 bars
+    only piano
+    add bass
+    add brushes
+    add bridge_vibes
+
+section return
+    length 4 bars
+    only all
+
+section coda
+    length 2 bars
+    only piano
+    add bass
+    add coda_vibes
+
+section release
+    length 1 bar
+    only all
+    remove all
+
+humanize all tracks
+    timing +/-6ms
+    velocity +/-4%
+
+master
+    peak -2db

@@ -20,7 +20,7 @@ instrument solo from gm_trumpet
     vibrato rate 5.5hz depth 0.003
 ```
 
-Built-in banks are `general_midi`, `acoustic`, `organs`, and `electronic`, shipped inside the Python package. You can also use `import bank "path/bank.mtl"`. File paths resolve relative to the file declaring the import or WAV, including nested banks. Python callers use `parse_song(text, base_path=Path(...))`; its default base is the working directory. Imported banks may contain only instrument definitions and imports. Repeated imports of the same resolved file load once; cycles, more than 32 nested imports, unknown bases and duplicate instrument names are errors. A preset must be defined/imported before `instrument NAME from PRESET`; each derived instrument is independent.
+Built-in banks are `general_midi`, `acoustic`, `organs`, `electronic`, `hybrid`, and `synth1_bank`, shipped inside the Python package. The acoustic, electronic, organ and hybrid banks include expanded original voices made with MTL's piano, pluck, FM, organ, oscillator, effects and layered synthesis models. The Synth1 bank contains 2,000 curated approximate conversions. You can also use `import bank "path/bank.mtl"`. File paths resolve relative to the file declaring the import or WAV, including nested banks. Python callers use `parse_song(text, base_path=Path(...))`; its default base is the working directory. Imported banks may contain only instrument definitions and imports. Repeated imports of the same resolved file load once; cycles, more than 32 nested imports, unknown bases and duplicate instrument names are errors. A preset must be defined/imported before `instrument NAME from PRESET`; each derived instrument is independent.
 
 The General MIDI bank contains all **128 zero-based GM program assignments** as `gm_...` instrument names, with family-specific synthesis settings. It is a program/name map with approximate synthetic voices, not a claim of sampled GM sound fidelity or a MIDI-file player. Examples: `gm_acoustic_grand_piano` (0), `gm_vibraphone` (11), `gm_drawbar_organ` (16), `gm_violin` (40), `gm_trumpet` (56). Percussion-channel mapping is not included. Inspect the bank files in `mtl/presets/` for the complete editable definitions.
 
@@ -28,7 +28,7 @@ The General MIDI bank contains all **128 zero-based GM program assignments** as 
 
 Acoustic presets: `concert_trumpet`, `solo_violin`, `studio_vibes`, `acoustic_piano`.
 
-Organ presets: `jazz_drawbar`, `rock_drawbar`, `cathedral_organ`, `soft_reed_organ`. Customize the drawbar registrations:
+Organ presets include `jazz_drawbar`, `rock_drawbar`, `cathedral_organ`, `soft_reed_organ`, `smoke_wheel`, `bright_leslie`, `stone_pipe`, and `reed_chapel`. Customize the drawbar registrations:
 
 ```text
 import bank "organs"
@@ -81,11 +81,55 @@ Clips retain stereo. Mono clips use equal-power pan; stereo clips use balance, p
 
 Input WAV supports unsigned 8-bit PCM, signed 16/24/32-bit PCM and floating-point PCM, mono/stereo at 8–192 kHz. Resampling preserves original gain; there is no automatic normalization. Each file is limited to 64 MiB and 120 seconds. Unsupported encodings, missing files and non-finite samples fail explicitly. The output is still stereo 16/24-bit integer WAV. Existing destinations are replaced only after a successful render, and input WAVs cannot be used as the output destination.
 
+## Layered voices, arpeggiator and granular effect
+
+The original MTL hybrid bank is available with `import bank "hybrid"`. Its dual-oscillator voices can blend a second waveform with `oscillator2`, and layered instruments combine other named presets:
+
+```text
+import bank "hybrid"
+instrument my_layered_voice
+    layers velvet_pad glass_string
+    layer_balance 0.8 0.45
+```
+
+Layer balance values are nonnegative relative weights. Layer references must exist and cannot form cycles. These are native MTL synth combinations, not reproductions of a commercial instrument.
+
+Put a chord pattern on a track and add an arpeggiator to turn each held chord into a repeating note sequence:
+
+```text
+track sequence instrument vector_lead pattern harmony
+    arpeggiator rate 1/8 mode up_down octaves 2 gate 0.75 pattern 1,3,2,4,0
+```
+
+The default is an eighth-note up/down pattern, one octave, and an 85% gate. Modes are `up`, `down`, `up_down` and `random`; a custom comma-separated pattern uses one-based indices into ascending chord pitches across octaves, with `0` for a rest. Rate accepts note values such as `1/8` and triplets such as `1/8t`; gate is 0.05–1.
+
+The `granular` effect is available on instruments and audio-track inserts:
+
+```text
+granular size 90ms density 14hz spray 60ms pitch 7 mix 0.25
+```
+
+It uses overlapping Hann-windowed grains, shared grain positions for stereo channels, bounded pitch shift, and seeded random spray. Grain size is 5–500 ms, density 1–200 Hz, spray 0–2 s, and pitch shift -24–24 semitones.
+
+Run `mtl search-instruments WORDS` to search bundled preset names, banks, engines and timbral labels. `--bank` limits the search to one built-in bank or an external instrument-only `.mtl` bank, and `--limit` caps the number of results. For a guided song workflow, use `mtl interactive [OUTPUT.mtl]`: choose a bank, instruments, key and melody shape, then inspect patterns and arrange the song's sections from a menu.
+
+The Synth1 converter reads `.sy1` text patches directly from a zip bank, including nested zip files, without extracting the archive. It keeps a diverse subset of at most 2,000 presets by default:
+
+```bash
+mtl convert-synth1 zipbank.zip mtl/presets/synth1_bank.mtl
+mtl convert-synth1 zipbank.zip smaller_bank.mtl --limit 500
+mtl curate-synth1 converted_bank.mtl curated_bank.mtl --limit 2000
+```
+
+After generating the package bank, songs can use `import bank "synth1_bank"` and reference a converted instrument by its generated texture/use name. Presets are selected deterministically across oscillator, filter, unison and effect families; original patch names, archive paths and source comments are omitted. `mtl curate-synth1 INPUT.mtl INPUT.mtl` safely replaces a converted bank in place when desired. Oscillator, filter, delay, chorus and saturation values are translated to the closest native controls; MTL's default envelope is used because the archive's legacy envelope fields do not map cleanly to the internal model. Synth1 controls with no MTL equivalent are not reproduced, so the resulting sounds are approximations rather than bit-exact patches. The converter limits archive size and patch count and writes the output only after the full bank has converted successfully.
+
 ## Examples
 
 ```bash
 mtl examples/instrument_showcase.mtl examples/colors.wav --quality 5
 mtl examples/wav_session.mtl wav_session.wav --quality 3
+mtl examples/hybrid_session.mtl signal_garden.wav --quality 3
+mtl examples/slow_granules.mtl soft_light.wav --quality 3
 ```
 
-The first file auditions trumpet, violin, vibes and four organ registrations. The second imports that rendered WAV at an absolute offset and at a named section while a GM preset plays on another track. `examples/colors.wav` is a local generated asset and is ignored by Git.
+The first file auditions trumpet, violin, vibes and four organ registrations. The second imports that rendered WAV at an absolute offset and at a named section while a GM preset plays on another track. The new examples demonstrate layered chords, a programmable arpeggiator, bass and melody parts, and granular textures. `examples/colors.wav` is a local generated asset and is ignored by Git.

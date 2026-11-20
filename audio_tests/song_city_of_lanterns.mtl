@@ -1,0 +1,150 @@
+song "City of Lanterns"
+bpm 96
+sample_rate 48000
+bit_depth 24
+seed 202
+output "song_city_of_lanterns.wav"
+
+instrument tine
+    soundfont "assets/GeneralUser-GS.sf2" preset "Tine Electric Piano"
+    envelope release 450ms
+    reverb room mix 0.08
+
+instrument flute
+    soundfont "assets/GeneralUser-GS.sf2" preset "Flute"
+    envelope release 350ms
+    reverb hall mix 0.10
+
+instrument bells
+    soundfont "assets/GeneralUser-GS.sf2" preset "Vibraphone"
+    envelope release 600ms
+    reverb room mix 0.12
+
+instrument gm_kit
+    soundfont "assets/GeneralUser-GS.sf2" preset "Standard 1"
+    envelope release 800ms
+
+instrument soft_pad
+    type synth
+    oscillator saw unison 4 detune 0.006
+    envelope attack 420ms decay 800ms sustain 0.62 release 1.2s
+    filter lowpass cutoff 1800hz resonance 0.65
+    reverb hall mix 0.14
+
+instrument round_bass
+    type synth
+    oscillator triangle
+    envelope attack 5ms decay 150ms sustain 0.72 release 120ms
+    filter lowpass cutoff 720hz resonance 0.75
+    distortion light
+
+pattern chords
+    length 4 bars
+    chord b2 d3 f#3 a3 on 1 hold 3.7 beats vel 0.60
+    chord g2 b2 d3 f#3 on 5 hold 3.7 beats vel 0.55
+    chord d3 f#3 a3 e4 on 9 hold 3.7 beats vel 0.58
+    chord a2 c#3 e3 f#3 on 13 hold 3.7 beats vel 0.56
+
+pattern atmosphere
+    length 4 bars
+    chord b2 f#3 a3 d4 on 1 hold 3.9 beats vel 0.36
+    chord g2 d3 f#3 b3 on 5 hold 3.9 beats vel 0.34
+    chord d3 a3 e4 f#4 on 9 hold 3.9 beats vel 0.37
+    chord a2 e3 f#3 c#4 on 13 hold 3.9 beats vel 0.35
+
+pattern bassline
+    length 4 bars
+    b1 on 1 hold 1.2 beats vel 0.78
+    f#2 on 2.5 hold 0.45 beats vel 0.53
+    a1 on 3.5 hold 0.4 beats vel 0.58
+    g1 on 5 hold 1.2 beats vel 0.74
+    d2 on 6.5 hold 0.45 beats vel 0.51
+    f#1 on 7.5 hold 0.4 beats vel 0.56
+    d2 on 9 hold 1.2 beats vel 0.76
+    a2 on 10.5 hold 0.45 beats vel 0.52
+    c#2 on 11.5 hold 0.4 beats vel 0.57
+    a1 on 13 hold 1.2 beats vel 0.75
+    e2 on 14.5 hold 0.45 beats vel 0.50
+    g1 on 15.5 hold 0.4 beats vel 0.55
+
+pattern melody
+    length 4 bars
+    f#5 on 1.5 hold 0.45 beats vel 0.56
+    a5 on 2.25 hold 0.45 beats vel 0.64
+    b5 on 3.5 hold 0.8 beats vel 0.70
+    a5 on 4.5 hold 0.45 beats vel 0.55
+    g5 on 5.5 hold 0.45 beats vel 0.62
+    f#5 on 6.25 hold 0.45 beats vel 0.56
+    d5 on 7.5 hold 0.8 beats vel 0.67
+    b4 on 8.5 hold 0.45 beats vel 0.52
+    a4 on 9.5 hold 0.45 beats vel 0.55
+    d5 on 10.25 hold 0.45 beats vel 0.62
+    f#5 on 11.5 hold 0.8 beats vel 0.69
+    e5 on 12.5 hold 0.45 beats vel 0.58
+    c#5 on 13.5 hold 0.45 beats vel 0.56
+    e5 on 14.25 hold 0.45 beats vel 0.62
+    f#5 on 15.5 hold 0.75 beats vel 0.72
+    e5 on 16.5 hold 0.45 beats vel 0.54
+
+pattern answer
+    length 4 bars
+    d5 on 2 hold 0.45 beats vel 0.34
+    f#5 on 4 hold 0.6 beats vel 0.40
+    b4 on 6 hold 0.45 beats vel 0.31
+    d5 on 8 hold 0.6 beats vel 0.38
+    f#5 on 10 hold 0.45 beats vel 0.36
+    a5 on 12 hold 0.6 beats vel 0.41
+    e5 on 14 hold 0.45 beats vel 0.32
+    c#5 on 16 hold 0.6 beats vel 0.37
+
+pattern groove
+    length 4 bars
+    kick on 1, 3, 5, 7, 9, 11, 13, 15 vel 0.82, 0.58, 0.76, 0.54, 0.80, 0.58, 0.74, 0.53
+    kick on 3.75, 11.75 vel 0.42, 0.46
+    snare on 2, 4, 6, 8, 10, 12, 14, 16 vel 0.62, 0.53, 0.58, 0.52, 0.64, 0.55, 0.60, 0.54
+    snare on 4.75, 12.75 vel 0.24, 0.28
+    hihat on 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5 vel 0.30, 0.18, 0.24, 0.18, 0.28, 0.18, 0.24, 0.20, 0.30, 0.18, 0.24, 0.18, 0.28, 0.18, 0.24, 0.20, 0.30, 0.18, 0.24, 0.18, 0.28, 0.18, 0.24, 0.20, 0.30, 0.18, 0.24, 0.18, 0.28, 0.18, 0.24, 0.20
+    open_hat on 8.5, 16.5 vel 0.32, 0.36
+    cymbal on 1 vel 0.28
+
+track keys instrument tine pattern chords volume -4db pan -12
+track pad instrument soft_pad pattern atmosphere volume -20db pan 10
+track bass instrument round_bass pattern bassline volume -8db
+track lead instrument flute pattern melody volume -3db pan 12
+track answer instrument bells pattern answer volume -13db pan -24
+track drums instrument gm_kit pattern groove volume -3db
+
+section intro
+    length 4 bars
+    only keys
+    add pad
+section verse
+    length 8 bars
+    add bass
+    add lead
+    add drums
+section chorus
+    length 8 bars
+    add answer
+section outro
+    length 4 bars
+    remove bass
+    remove lead
+    remove answer
+    remove drums
+section tail
+    length 1 bar
+    remove all
+
+over 4 bars in intro
+    pad.filter.cutoff from 700hz to 1800hz
+over 4 bars in chorus
+    lead.volume from -7db to -3db
+over 4 bars in outro
+    keys.volume from -4db to -34db
+    pad.volume from -20db to -42db
+humanize all tracks
+    timing ±3ms
+    velocity ±2%
+master
+    peak -1db

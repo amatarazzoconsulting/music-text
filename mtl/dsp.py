@@ -10,6 +10,7 @@ from .model import Instrument
 from .audio import read_audio
 from .acoustic import acoustic_voice
 from .piano import piano_voice
+from .parser import DRUMS
 
 
 def frequency(pitch):
@@ -77,6 +78,92 @@ def _coefficients(cutoff, rate, inst):
     return b / a[0], a / a[0]
 
 
+def _compressor(audio, rate, inst):
+    if inst.compressor_ratio <= 1:
+        return audio
+    threshold = inst.compressor_threshold
+    detector = np.abs(audio)
+    gain = np.ones_like(detector)
+    over = detector > threshold
+    gain[over] = (threshold * (detector[over] / threshold) ** (1 / inst.compressor_ratio)) / detector[over]
+    gain = np.clip(gain, 0, 1)
+    attack = max(round(inst.compressor_attack * rate), 1)
+    release = max(round(inst.compressor_release * rate), 1)
+    smoothed = np.empty_like(gain)
+    state = 1.0
+    for i, value in enumerate(gain):
+        coefficient = 1 - (1 / attack if value < state else 1 / release)
+        state = value if i == 0 else coefficient * state + (1 - coefficient) * value
+        smoothed[i] = state
+    return audio * smoothed * inst.compressor_makeup
+
+
+def _tube(audio, inst):
+    if inst.tube_drive <= 0:
+        return audio
+    driven = audio * (1 + inst.tube_drive)
+    asymmetry = inst.tube_bias * 0.12
+    wet = np.tanh(driven + asymmetry) - np.tanh(asymmetry)
+    return audio * (1 - inst.tube_mix) + wet * inst.tube_mix
+
+
+def _overdrive(audio, rate, inst):
+    if inst.overdrive_drive <= 0:
+        return audio
+    wet = np.tanh(audio * (1 + inst.overdrive_drive * 3))
+    cutoff = min(inst.overdrive_tone, rate * 0.45)
+    sos = signal.butter(2, cutoff, 'lowpass', fs=rate, output='sos')
+    wet = signal.sosfilt(sos, wet)
+    return audio * (1 - inst.overdrive_mix) + wet * inst.overdrive_mix
+
+
+def _chorus(audio, rate, inst):
+    if inst.chorus_mix <= 0 or inst.chorus_rate <= 0:
+        return audio
+    t = np.arange(len(audio)) / rate
+    delay = inst.chorus_depth * (1 + np.sin(2 * np.pi * inst.chorus_rate * t))
+    wet = np.empty_like(audio)
+    for i, samples in enumerate(np.rint(delay * rate).astype(int)):
+        source = i - samples
+        wet[i] = audio[source] if source >= 0 else 0
+    return audio * (1 - inst.chorus_mix) + wet * inst.chorus_mix
+
+
+def _granular(audio, rate, inst, rng):
+    """Rebuild audio from overlapping, windowed grains with shared stereo positions."""
+    if inst.grain_mix <= 0 or len(audio) == 0:
+        return audio
+    was_mono = audio.ndim == 1
+    source = audio[:, None] if was_mono else audio
+    grain_size = max(16, round(inst.grain_size * rate))
+    hop = max(1, round(rate / inst.grain_density))
+    half = grain_size // 2
+    window = np.hanning(grain_size)
+    ratio = 2 ** (inst.grain_pitch / 12)
+    source_indices = np.arange(len(source))
+    result = np.zeros_like(source, dtype=float)
+    weights = np.zeros(len(source), dtype=float)
+    for center in range(0, len(source), hop):
+        jitter = round(rng.uniform(-inst.grain_spray, inst.grain_spray) * rate)
+        grain_start = center - half
+        destination_start = max(0, grain_start)
+        destination_end = min(len(source), grain_start + grain_size)
+        window_start = destination_start - grain_start
+        window_end = window_start + destination_end - destination_start
+        positions = np.arange(destination_start, destination_end) - center
+        source_positions = np.clip(center + jitter + positions * ratio, 0, len(source) - 1)
+        grain_window = window[window_start:window_end]
+        for channel in range(source.shape[1]):
+            grain = np.interp(source_positions, source_indices, source[:, channel])
+            result[destination_start:destination_end, channel] += grain * grain_window
+        weights[destination_start:destination_end] += grain_window
+    wet = source.astype(float, copy=True)
+    covered = weights > 1e-8
+    wet[covered] = result[covered] / weights[covered, None]
+    output = source * (1 - inst.grain_mix) + wet * inst.grain_mix
+    return output[:, 0] if was_mono else output
+
+
 def _filter(audio, rate, inst, *, start_sample=0, cutoff_curve=None):
     limit = rate * 0.45
     if cutoff_curve is None and not inst.lfo_depth:
@@ -121,13 +208,20 @@ def _drum(inst, rate, rng):
         phase = 2 * np.pi * (low * t + (high - low) * tau * (1 - np.exp(-t / tau)))
         audio = np.sin(phase) * np.exp(-t * (8 if name == "kick" else 12))
         audio += 0.12 * noise * np.exp(-t * 450)
+        if name == "kick":
+            audio += 0.10 * np.sin(2 * np.pi * 920 * t) * np.exp(-t * 180)
+            audio += 0.07 * np.sin(2 * np.pi * 64 * t) * np.exp(-t * 5)
+        else:
+            audio += 0.08 * np.sin(2 * np.pi * 330 * t) * np.exp(-t * 25)
     elif name in {"snare", "clap"}:
         high = signal.sosfilt(signal.butter(2, 1200, 'highpass', fs=rate, output='sos'), noise)
         audio = 0.75 * high * np.exp(-t * 22)
         if name == "snare":
             audio += 0.35 * np.sin(2 * np.pi * 185 * t) * np.exp(-t * 35)
         else:
-            audio *= 1 + 0.5 * np.sin(2 * np.pi * 95 * t) * np.exp(-t * 80)
+            envelope_clap = 0.38 * (np.exp(-t * 95) + np.exp(-((t - .012) ** 2) * 18000)
+                                    + np.exp(-((t - .024) ** 2) * 18000))
+            audio = 0.8 * high * envelope_clap
     else:
         high = signal.sosfilt(signal.butter(3, min(6500, rate * 0.35), 'highpass', fs=rate, output='sos'), noise)
         audio = high * np.exp(-t * (55 if name == "hihat" else 7))
@@ -145,7 +239,7 @@ def synthesize(inst: Instrument, pitch: str, gate_seconds: float, rate: int, qua
         release = max(inst.release, 0.005, inst.pedal * 2 if inst.engine in {'piano', 'multisampler'} else 0)
         count = max(2, round((gate_seconds + release) * internal_rate))
         gate = min(round(gate_seconds * internal_rate), count - 1)
-        freq = frequency(pitch)
+        freq = 0.0 if pitch in DRUMS else frequency(pitch)
         t = np.arange(count) / internal_rate
         audio = np.zeros(count)
         if inst.engine == 'multisampler':
@@ -157,6 +251,12 @@ def synthesize(inst: Instrument, pitch: str, gate_seconds: float, rate: int, qua
             if factor > 1:
                 audio = signal.resample_poly(audio, 1, factor, axis=0)
             return np.asarray(audio * .35, dtype=np.float32)
+        if inst.engine == 'soundfont':
+            from .soundfont import soundfont_voice
+            audio = soundfont_voice(inst, pitch, gate_seconds, rate, velocity)
+            audio = process_audio(audio, inst, rate, quality, rng,
+                                  start_sample=start_sample, cutoff_curve=cutoff_curve)
+            return np.asarray(audio, dtype=np.float32)
         if inst.engine == 'piano':
             audio = piano_voice(inst, freq, t, internal_rate, rng, velocity, gate_seconds=gate_seconds)
         elif inst.engine in {'trumpet', 'violin', 'vibes', 'organ'}:
@@ -185,9 +285,22 @@ def synthesize(inst: Instrument, pitch: str, gate_seconds: float, rate: int, qua
             for i, offset in enumerate(offsets):
                 audio += oscillator(inst.waveform, freq * (1 + offset * inst.detune), count, internal_rate, i * 0.137)
             audio /= inst.unison
+        if inst.oscillator2_waveform and inst.oscillator2_level:
+            second_freq = freq * 2 ** (inst.oscillator2_semitones / 12) * (1 + inst.oscillator2_detune)
+            second = oscillator(inst.oscillator2_waveform, second_freq, count, internal_rate, 0.271)
+            audio = (audio + second * inst.oscillator2_level) / (1 + inst.oscillator2_level)
         audio *= envelope(count, gate, inst, internal_rate)
     audio = _filter(audio, internal_rate, inst, start_sample=start_sample * factor,
                     cutoff_curve=cutoff_curve)
+    if inst.eq_low != 1 or inst.eq_mid != 1 or inst.eq_high != 1:
+        low = signal.sosfilt(signal.butter(2, 250, 'lowpass', fs=internal_rate, output='sos'), audio)
+        high = signal.sosfilt(signal.butter(2, 4000, 'highpass', fs=internal_rate, output='sos'), audio)
+        mid = audio - low - high
+        audio = low * inst.eq_low + mid * inst.eq_mid + high * inst.eq_high
+    audio = _compressor(audio, internal_rate, inst)
+    audio = _tube(audio, inst)
+    audio = _overdrive(audio, internal_rate, inst)
+    audio = _chorus(audio, internal_rate, inst)
     if inst.drive:
         audio = np.tanh(audio * (1 + inst.drive)) / np.tanh(1 + inst.drive)
     # Every voice ends at zero, including resonant filters and drum tails.
@@ -195,6 +308,7 @@ def synthesize(inst: Instrument, pitch: str, gate_seconds: float, rate: int, qua
     audio[-fade:] *= np.linspace(1, 0, fade)
     if factor > 1:
         audio = signal.resample_poly(audio, 1, factor)
+    audio = _granular(audio, rate, inst, rng)
     audio = ambience(audio, inst, rate, rng)
     return np.asarray(audio * 0.35, dtype=np.float32)
 
@@ -216,9 +330,21 @@ def ambience(audio, inst, rate, rng):
         # Deterministic, diffuse FIR room response; no unstable feedback network.
         count = round(inst.reverb_seconds * rate)
         t = np.arange(count) / rate
-        impulse = rng.normal(0, 1, count) * np.exp(-t * (8 / inst.reverb_seconds))
-        impulse[:round(0.015 * rate)] = 0  # predelay
-        impulse = signal.sosfilt(signal.butter(1, min(6000, rate * 0.4), fs=rate, output='sos'), impulse)
+        decay = {"room": 10, "hall": 8, "cathedral": 5.5, "plate": 7,
+                 "spring": 9, "chamber": 9, "ambient": 6.5, "shimmer": 5.2}[inst.reverb_type]
+        impulse = rng.normal(0, 1, count) * np.exp(-t * (decay / inst.reverb_seconds))
+        predelay = {"room": .005, "hall": .015, "cathedral": .035, "plate": .008,
+                    "spring": .020, "chamber": .012, "ambient": .050, "shimmer": .060}[inst.reverb_type]
+        impulse[:round(predelay * rate)] = 0
+        cutoff = {"room": 7000, "hall": 6000, "cathedral": 5000, "plate": 8000,
+                  "spring": 3500, "chamber": 6500, "ambient": 4500, "shimmer": 9000}[inst.reverb_type]
+        impulse = signal.sosfilt(signal.butter(2, min(cutoff, rate * 0.4), fs=rate, output='sos'), impulse)
+        if inst.reverb_type == "spring":
+            impulse += 0.35 * np.roll(impulse, round(.023 * rate))
+        elif inst.reverb_type == "shimmer":
+            shimmer = signal.resample_poly(impulse, 2, 1)
+            shimmer = signal.resample_poly(shimmer, 1, 2)
+            impulse = .75 * impulse + .25 * shimmer
         impulse /= max(np.sqrt(np.sum(impulse**2)), 1e-12)
         wet = signal.fftconvolve(audio, impulse)
         audio = np.pad(audio * (1 - inst.reverb), (0, len(wet) - len(audio))) + wet * inst.reverb * 0.4
@@ -233,9 +359,20 @@ def process_audio(audio, inst, rate, quality, rng, *, start_sample=0, cutoff_cur
         if factor > 1:
             channel = signal.resample_poly(channel, factor, 1)
         channel = _filter(channel, rate * factor, inst, start_sample=start_sample * factor, cutoff_curve=cutoff_curve)
+        if inst.eq_low != 1 or inst.eq_mid != 1 or inst.eq_high != 1:
+            low = signal.sosfilt(signal.butter(2, 250, 'lowpass', fs=rate * factor, output='sos'), channel)
+            high = signal.sosfilt(signal.butter(2, 4000, 'highpass', fs=rate * factor, output='sos'), channel)
+            mid = channel - low - high
+            channel = low * inst.eq_low + mid * inst.eq_mid + high * inst.eq_high
+        channel = _compressor(channel, rate * factor, inst)
+        channel = _tube(channel, inst)
+        channel = _overdrive(channel, rate * factor, inst)
+        channel = _chorus(channel, rate * factor, inst)
         if inst.drive:
             channel = np.tanh(channel * (1 + inst.drive)) / np.tanh(1 + inst.drive)
         if factor > 1:
             channel = signal.resample_poly(channel, 1, factor)
-        channels.append(ambience(channel, inst, rate, rng))
-    return np.column_stack(channels)
+        channels.append(channel)
+    processed = _granular(np.column_stack(channels), rate, inst, rng)
+    return np.column_stack([ambience(processed[:, channel], inst, rate, rng)
+                            for channel in range(processed.shape[1])])

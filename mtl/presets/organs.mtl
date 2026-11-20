@@ -21,3 +21,89 @@ instrument soft_reed_organ from jazz_drawbar
     drawbars 0 0 8 3 6 1 4 0 2
     percussion 0
     rotary 0.4
+
+instrument smoke_wheel from jazz_drawbar
+    drawbars 8 7 6 2 0 0 0 0 0
+    rotary 2.6
+    percussion 0.08
+    vibrato rate 5.2hz depth 0.0014
+    filter lowpass cutoff 4600hz
+    distortion light
+
+instrument bright_leslie from rock_drawbar
+    drawbars 8 8 8 7 5 3 2 1 0
+    rotary 7.2
+    percussion 0.3
+    vibrato rate 6.4hz depth 0.002
+    overdrive drive 1.5 tone 5200hz mix 0.18
+
+instrument soft_drawbar from jazz_drawbar
+    drawbars 4 3 6 0 0 0 0 0 0
+    rotary 0.25
+    percussion 0
+    envelope attack 22ms decay 40ms sustain 0.9 release 160ms
+    reverb room mix 0.12
+
+instrument stone_pipe from cathedral_organ
+    drawbars 8 0 5 8 2 6 0 0 7
+    rotary 0
+    envelope attack 90ms decay 20ms sustain 1 release 850ms
+    reverb cathedral mix 0.3
+
+instrument peal_organ from cathedral_organ
+    drawbars 8 0 8 7 0 5 0 0 8
+    envelope attack 28ms decay 15ms sustain 1 release 700ms
+    filter lowpass cutoff 7400hz
+    reverb cathedral mix 0.34
+
+instrument reed_chapel from soft_reed_organ
+    drawbars 0 0 7 4 5 0 2 0 1
+    rotary 0.15
+    envelope attack 55ms decay 25ms sustain 0.95 release 520ms
+    filter lowpass cutoff 5200hz
+    reverb hall mix 0.2
+
+instrument pulse_organ from jazz_drawbar
+    drawbars 8 8 0 0 0 0 0 0 0
+    rotary 4.8
+    percussion 0.42
+    vibrato rate 6.8hz depth 0.003
+    envelope attack 1ms decay 75ms sustain 0.76 release 85ms
+
+instrument dusty_combo from soft_reed_organ
+    drawbars 2 5 8 2 0 0 0 0 0
+    rotary 1.1
+    percussion 0.04
+    filter lowpass cutoff 3600hz resonance 0.8
+    tube drive 1.6 bias 0.48 mix 0.18
+    reverb room mix 0.08
+
+instrument choir_wheel from cathedral_organ
+    drawbars 8 0 6 5 4 4 0 0 3
+    rotary 0.5
+    percussion 0
+    vibrato rate 5.3hz depth 0.001
+    envelope attack 150ms decay 30ms sustain 1 release 900ms
+    reverb hall mix 0.24
+
+instrument glass_stops from cathedral_organ
+    drawbars 6 0 0 7 0 6 0 0 8
+    rotary 0
+    percussion 0
+    filter lowpass cutoff 12500hz resonance 0.36
+    reverb cathedral mix 0.26
+
+instrument low_fundamental from jazz_drawbar
+    drawbars 8 5 3 0 0 0 0 0 0
+    rotary 0.35
+    percussion 0
+    filter lowpass cutoff 1500hz resonance 0.7
+    compressor threshold -14db ratio 2.2 attack 12ms release 120ms
+
+instrument rotating_brass from rock_drawbar
+    drawbars 8 7 6 6 4 3 2 0 0
+    rotary 5.6
+    percussion 0.18
+    vibrato rate 5.9hz depth 0.0024
+    overdrive drive 1.8 tone 6100hz mix 0.2
+    reverb room mix 0.1

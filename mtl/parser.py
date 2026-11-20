@@ -10,7 +10,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 from .friendly import normalize, normalize_note, numeric_tokens, default_octave, PROPERTIES
-from .model import AudioClip, Automation, Instrument, MTLError, Note, Pattern, Section, Song, Track
+from .model import Arpeggiator, AudioClip, Automation, Instrument, MTLError, Note, Pattern, Section, Song, Track
 
 DRUMS = {"kick", "snare", "hihat", "closed_hat", "open_hat", "hat", "clap", "tom", "ride", "cymbal", "perc"}
 NOTE = re.compile(r"[a-gA-G][#b]?-?\d\Z")
@@ -76,7 +76,8 @@ def _load_lines(source, base_path, filename='', stack=(), loaded=None):
             if line.children or not (len(t) == 2 or len(t) == 3 and t[1] == 'bank'):
                 raise line.error('expected import "file.mtl" or import bank "file.mtl"')
             path = (base_path / t[-1]).resolve()
-            if len(t) == 3 and t[1] == 'bank' and t[-1] in {'general_midi', 'acoustic', 'organs', 'electronic'}:
+            if len(t) == 3 and t[1] == 'bank' and t[-1] in {
+                    'general_midi', 'acoustic', 'organs', 'electronic', 'hybrid', 'synth1_bank'}:
                 path = Path(__file__).parent / 'presets' / (t[-1] + '.mtl')
                 path = path.resolve()
             if path in stack:
@@ -161,6 +162,25 @@ def _preset(name, *, gm=True):
         inst.engine, inst.sustain, inst.release = "pluck", 0.2, 0.3
     elif name == "bell":
         inst.engine, inst.release = "bell", 1.5
+    elif name in {"velvet_pad", "focused_sub", "cutting_lead", "moving_bass"}:
+        inst.engine = "synth"
+        inst.waveform = "saw" if name in {"cutting_lead", "moving_bass"} else "sine" if name == "focused_sub" else "triangle"
+        inst.attack = .008 if name == "cutting_lead" else .3 if name == "velvet_pad" else .006
+        inst.release = .18 if name == "cutting_lead" else 1.1 if name == "velvet_pad" else .08
+        inst.cutoff = 350 if name == "focused_sub" else 6500 if name == "cutting_lead" else 2600
+        inst.unison = 5 if name in {"velvet_pad", "cutting_lead"} else 1
+        inst.detune = .007 if name == "velvet_pad" else .012 if name == "cutting_lead" else .01
+    elif name in {"rhodes", "fender_rhodes", "dx7", "juno", "jupiter", "prophet", "moog", "clavinet", "wurlitzer"}:
+        inst.engine = "fm" if name in {"dx7", "prophet"} else "bell" if name in {"rhodes", "fender_rhodes", "wurlitzer", "clavinet"} else "synth"
+        inst.waveform = {"juno": "saw", "jupiter": "saw", "moog": "square", "clavinet": "square"}.get(name, "sine")
+        inst.attack = .008 if name not in {"rhodes", "wurlitzer"} else .003
+        inst.decay = .45 if name in {"juno", "jupiter", "moog"} else .25
+        inst.sustain = .55 if name in {"juno", "jupiter", "moog"} else .72
+        inst.release = .65 if name in {"juno", "jupiter"} else .35
+        inst.cutoff = {"moog": 900, "juno": 3500, "jupiter": 4500, "clavinet": 7000}.get(name, 6500)
+        inst.chorus_rate = .55 if name in {"juno", "jupiter", "rhodes", "fender_rhodes"} else 0
+        inst.chorus_depth = .002
+        inst.chorus_mix = .22 if inst.chorus_rate else 0
     elif name not in {"sine", "synth"}:
         matched = _gm_name(name) if gm else None
         if matched:
@@ -194,11 +214,107 @@ def _describe(inst, tokens):
 
 def _instrument_property(inst, tokens, song):
     key, *args = tokens
-    if key == "type" and len(args) == 1:
+    if key == "tube" and len(args) in {2, 4, 6}:
+        values = dict(zip(args[::2], args[1::2]))
+        if set(values) - {"drive", "bias", "mix"}:
+            raise ValueError("tube parameters: drive, bias, mix")
+        if "drive" in values:
+            inst.tube_drive = number(values["drive"], 0, 20)
+        if "bias" in values:
+            inst.tube_bias = number(values["bias"], 0, 1)
+        if "mix" in values:
+            inst.tube_mix = number(values["mix"], 0, 1)
+    elif key == "overdrive" and len(args) in {2, 4, 6}:
+        values = dict(zip(args[::2], args[1::2]))
+        if set(values) - {"drive", "tone", "mix"}:
+            raise ValueError("overdrive parameters: drive, tone, mix")
+        if "drive" in values:
+            inst.overdrive_drive = number(values["drive"], 0, 20)
+        if "tone" in values:
+            inst.overdrive_tone = quantity(values["tone"], "hz", 200, 96000)
+        if "mix" in values:
+            inst.overdrive_mix = number(values["mix"], 0, 1)
+    elif key == "compressor" and len(args) in {2, 4, 6, 8, 10}:
+        values = dict(zip(args[::2], args[1::2]))
+        if set(values) - {"threshold", "ratio", "attack", "release", "makeup"}:
+            raise ValueError("compressor parameters: threshold, ratio, attack, release, makeup")
+        if "threshold" in values:
+            inst.compressor_threshold = 10 ** (quantity(values["threshold"], "db", -96, 0) / 20)
+        if "ratio" in values:
+            inst.compressor_ratio = number(values["ratio"], 1, 100)
+        if "attack" in values:
+            inst.compressor_attack = seconds(values["attack"])
+        if "release" in values:
+            inst.compressor_release = seconds(values["release"])
+        if "makeup" in values:
+            inst.compressor_makeup = 10 ** (quantity(values["makeup"], "db", -24, 24) / 20)
+    elif key == "chorus" and len(args) in {2, 4, 6}:
+        values = dict(zip(args[::2], args[1::2]))
+        if set(values) - {"rate", "depth", "mix"}:
+            raise ValueError("chorus parameters: rate, depth, mix")
+        if "rate" in values:
+            inst.chorus_rate = quantity(values["rate"], "hz", 0.01, 30)
+        if "depth" in values:
+            inst.chorus_depth = number(values["depth"], 0, 0.02)
+        if "mix" in values:
+            inst.chorus_mix = number(values["mix"], 0, 1)
+    elif key == "equalizer" and len(args) == 6 and args[::2] == ["low", "mid", "high"]:
+        inst.eq_low = number(args[1], 0, 4)
+        inst.eq_mid = number(args[3], 0, 4)
+        inst.eq_high = number(args[5], 0, 4)
+    elif key == "soundfont" and len(args) in {1, 3}:
+        inst.engine = "soundfont"
+        inst.sf2_path = str(Path(args[0]).resolve())
+        if len(args) == 3:
+            if args[1] != "preset":
+                raise ValueError("expected soundfont file preset NAME")
+            inst.sf2_preset = args[2]
+    elif key == "layers" and len(args) >= 1:
+        inst.layers = tuple(args)
+        inst.engine = "layered"
+    elif key == "layer_balance" and len(args) >= 1:
+        inst.layer_balance = tuple(number(v, 0, 1) for v in args)
+    elif key == "oscillator2" and len(args) in {1, 3, 5, 7}:
+        waveform, *options = args
+        if waveform not in {"sine", "saw", "square", "triangle", "noise"}:
+            raise ValueError("unknown second oscillator waveform")
+        inst.oscillator2_waveform = waveform
+        while options:
+            parameter, value, *options = options
+            if parameter == "level":
+                inst.oscillator2_level = number(value, 0, 1)
+            elif parameter == "transpose":
+                transposition = number(value, -48, 48)
+                if not transposition.is_integer():
+                    raise ValueError("oscillator2 transpose must be an integer number of semitones")
+                inst.oscillator2_semitones = int(transposition)
+            elif parameter == "detune":
+                inst.oscillator2_detune = number(value, 0, 0.1)
+            else:
+                raise ValueError(f"unknown oscillator2 parameter {parameter!r}")
+    elif key == "granular" and len(args) in {2, 4, 6, 8, 10}:
+        values = dict(zip(args[::2], args[1::2]))
+        if set(values) - {"size", "density", "spray", "pitch", "mix"}:
+            raise ValueError("granular parameters: size, density, spray, pitch, mix")
+        if "size" in values:
+            inst.grain_size = seconds(values["size"])
+            if not 0.005 <= inst.grain_size <= 0.5:
+                raise ValueError("granular size must be from 5ms to 500ms")
+        if "density" in values:
+            inst.grain_density = quantity(values["density"], "hz", 1, 200)
+        if "spray" in values:
+            inst.grain_spray = seconds(values["spray"])
+            if inst.grain_spray > 2:
+                raise ValueError("granular spray must be at most 2s")
+        if "pitch" in values:
+            inst.grain_pitch = number(values["pitch"], -24, 24)
+        if "mix" in values:
+            inst.grain_mix = number(values["mix"], 0, 1)
+    elif key == "type" and len(args) == 1:
         aliases = {"wavetable": "synth", "virtual_analog": "synth"}
         engine = aliases.get(args[0], args[0])
-        if engine not in {"synth", "piano", "pluck", "bell", "fm", "drum", "trumpet", "violin", "vibes", "organ", "sampler", "multisampler"}:
-            raise ValueError("supported types: piano, synth, wavetable, virtual_analog, pluck, bell, fm, drum, trumpet, violin, vibes, organ, sampler, multisampler")
+        if engine not in {"synth", "piano", "pluck", "bell", "fm", "drum", "trumpet", "violin", "vibes", "organ", "sampler", "multisampler", "soundfont", "layered"}:
+            raise ValueError("supported types: piano, synth, wavetable, virtual_analog, pluck, bell, fm, drum, trumpet, violin, vibes, organ, sampler, multisampler, soundfont, layered")
         inst.engine = engine
     elif key in {'hammer', 'soundboard', 'string_detune', 'pedal', 'stereo_width'} and len(args) == 1:
         setattr(inst, key, number(args[0], 0, 10 if key == 'string_detune' else 1))
@@ -268,9 +384,11 @@ def _instrument_property(inst, tokens, song):
     elif key == "distortion" and len(args) == 1:
         levels = {"none": 0, "light": 1, "medium": 2, "heavy": 4}
         inst.drive = levels[args[0]] if args[0] in levels else number(args[0], 0, 8)
-    elif key == "reverb" and len(args) == 3 and args[0] in {"room", "hall", "cathedral"} and args[1] == "mix":
+    elif key == "reverb" and len(args) == 3 and args[0] in {"room", "hall", "cathedral", "plate", "spring", "chamber", "ambient", "shimmer"} and args[1] == "mix":
         inst.reverb = number(args[2], 0, 1)
-        inst.reverb_seconds = {"room": 0.6, "hall": 1.5, "cathedral": 3.0}[args[0]]
+        inst.reverb_type = args[0]
+        inst.reverb_seconds = {"room": 0.6, "hall": 1.5, "cathedral": 3.0, "plate": 1.8,
+                               "spring": 1.2, "chamber": 1.0, "ambient": 2.5, "shimmer": 3.5}[args[0]]
     elif key == "delay" and len(args) == 6 and args[::2] == ["time", "feedback", "mix"]:
         inst.delay_time = seconds(args[1])
         if not 0 < inst.delay_time <= 3:
@@ -441,6 +559,9 @@ def _track(line, song):
             if child.children:
                 raise ValueError("track properties cannot contain nested blocks")
             args = child.tokens.copy()
+            if args[0] == 'arpeggiator':
+                track.arpeggiator = None if args[1:] == ['off'] else _arpeggiator(args[1:])
+                continue
             if args[0] == 'audio':
                 if len(args) < 4 or args[2] != 'at':
                     raise ValueError('expected audio "file.wav" at 4 bars or at section chorus')
@@ -453,7 +574,8 @@ def _track(line, song):
                     clip = AudioClip(str((child.base_path / args[1]).resolve()), offset)
                 track.clips.append(clip)
                 continue
-            if args[0] in {'filter', 'reverb', 'delay', 'distortion'}:
+            if args[0] in {'filter', 'reverb', 'delay', 'distortion', 'granular',
+                           'tube', 'overdrive', 'compressor', 'chorus', 'equalizer'}:
                 if track.effects is None:
                     track.effects = Instrument('__effects', cutoff=96000)
                 _instrument_property(track.effects, args, song)
@@ -475,8 +597,40 @@ def _track(line, song):
                     track.pan = 0 if value == "center" else number(value, -100, 100) / 100
                 else:
                     raise ValueError(f"unknown track property {key!r}")
-        except (ValueError, IndexError) as exc:
+        except (ValueError, IndexError, ZeroDivisionError) as exc:
             raise child.error(str(exc)) from exc
+
+
+def _arpeggiator(args):
+    settings = Arpeggiator()
+    if len(args) % 2:
+        raise ValueError("arpeggiator options are rate, mode, octaves, gate, and pattern")
+    values = dict(zip(args[::2], args[1::2]))
+    if set(values) - {"rate", "mode", "octaves", "gate", "pattern"}:
+        raise ValueError("arpeggiator options are rate, mode, octaves, gate, and pattern")
+    step = settings.step
+    if "rate" in values:
+        token = values["rate"]
+        triplet = token.endswith("t")
+        step = 4 * Fraction(token.removesuffix("t")) * (Fraction(2, 3) if triplet else 1)
+        if not Fraction(1, 16) <= step <= 4:
+            raise ValueError("arpeggiator rate must be from 1/64 to 1/1 note value")
+    mode = values.get("mode", settings.mode)
+    if mode not in {"up", "down", "up_down", "random"}:
+        raise ValueError("arpeggiator mode must be up, down, up_down, or random")
+    octaves_value = number(values.get("octaves", str(settings.octaves)), 1, 4)
+    if not octaves_value.is_integer():
+        raise ValueError("arpeggiator octaves must be an integer from 1 to 4")
+    gate = number(values.get("gate", str(settings.gate)), 0.05, 1)
+    pattern = ()
+    if "pattern" in values:
+        try:
+            pattern = tuple(int(value) for value in values["pattern"].split(","))
+        except ValueError as exc:
+            raise ValueError("arpeggiator pattern must be comma-separated step numbers (0 is a rest)") from exc
+        if not pattern or any(value < 0 for value in pattern):
+            raise ValueError("arpeggiator pattern must contain positive step numbers; 0 is a rest")
+    return Arpeggiator(step, mode, int(octaves_value), gate, pattern)
 
 
 def parse_song(source: str, *, base_path=None, _bank=False) -> Song:
@@ -560,6 +714,13 @@ def parse_song(source: str, *, base_path=None, _bank=False) -> Song:
                             raise ValueError("instrument properties cannot contain nested blocks")
                         if child.tokens[0] in {'sample', 'sample_map'} and len(child.tokens) == 2:
                             setattr(inst, 'sample_path' if child.tokens[0] == 'sample' else 'sample_map', str((child.base_path / child.tokens[1]).resolve()))
+                        elif child.tokens[0] == 'soundfont' and len(child.tokens) in {2, 4}:
+                            inst.engine = "soundfont"
+                            inst.sf2_path = str((child.base_path / child.tokens[1]).resolve())
+                            if len(child.tokens) == 4:
+                                if child.tokens[2] != "preset":
+                                    raise ValueError("expected soundfont FILE preset NAME")
+                                inst.sf2_preset = child.tokens[3]
                         else:
                             _instrument_property(inst, child.tokens.copy(), song)
                     except (ValueError, IndexError, ZeroDivisionError) as exc:
@@ -650,6 +811,32 @@ def parse_song(source: str, *, base_path=None, _bank=False) -> Song:
     if not song.tracks and song.patterns:
         for name in song.patterns:
             song.tracks[name] = Track(name, 'drums' if all(n.pitches[0] in DRUMS for n in song.patterns[name].notes) else 'piano', name)
+    visiting_layers = set()
+    checked_layers = set()
+
+    def validate_layers(name):
+        if name in visiting_layers:
+            raise MTLError(f"instrument layer cycle includes {name!r}")
+        if name in checked_layers:
+            return
+        inst = song.instruments[name]
+        if inst.layers:
+            if inst.layer_balance and len(inst.layer_balance) != len(inst.layers):
+                raise MTLError(f"instrument {name!r}: layer_balance must have one value per layer")
+            if inst.layer_balance and not any(inst.layer_balance):
+                raise MTLError(f"instrument {name!r}: at least one layer must have nonzero balance")
+            visiting_layers.add(name)
+            for layer in inst.layers:
+                if layer not in song.instruments:
+                    raise MTLError(f"instrument {name!r}: unknown layer {layer!r}")
+                validate_layers(layer)
+            visiting_layers.remove(name)
+        elif inst.engine == "layered":
+            raise MTLError(f"instrument {name!r}: layered type requires a layers property")
+        checked_layers.add(name)
+
+    for instrument_name in song.instruments:
+        validate_layers(instrument_name)
     for track in song.tracks.values():
         if not track.clips:
             if not track.pattern:
@@ -662,6 +849,9 @@ def parse_song(source: str, *, base_path=None, _bank=False) -> Song:
             raise MTLError(f'multisampler {inst.name!r} requires sample_map "file.json"')
         if inst.engine == 'sampler' and not inst.sample_path:
             raise MTLError(f'sampler {inst.name!r} requires a sample WAV file')
+        if inst.engine == 'soundfont':
+            if not inst.sf2_path:
+                raise MTLError(f'soundfont {inst.name!r} requires soundfont "file.sf2"')
     for track in song.tracks.values():
         if track.clips:
             if track.pattern or track.instrument:
@@ -681,7 +871,7 @@ def parse_song(source: str, *, base_path=None, _bank=False) -> Song:
             is_drum = note.pitches[0] in DRUMS
             if (track.instrument == "drums") != is_drum:
                 # A single drum instrument can play pitched events as triggers.
-                if not (track.instrument != "drums" and song.instruments[track.instrument].engine == "drum"):
+                if not (track.instrument != "drums" and song.instruments[track.instrument].engine in {"drum", "soundfont"}):
                     raise MTLError(f"track {track.name!r}: drum patterns require instrument drums; pitched patterns require a melodic instrument")
     for section in song.sections:
         for _, track in section.actions:
@@ -734,7 +924,9 @@ def _gm_name(name):
 
 
 def _known_instrument(name):
-    return name in DRUMS | {'piano', 'guitar', 'pluck', 'bass', 'lead', 'pad', 'bell', 'sine', 'synth', 'drums'} or _gm_name(name) is not None
+    keyboards = {'rhodes', 'fender_rhodes', 'dx7', 'juno', 'jupiter', 'prophet', 'moog', 'clavinet', 'wurlitzer',
+                 'velvet_pad', 'focused_sub', 'cutting_lead', 'moving_bass'}
+    return name in DRUMS | {'piano', 'guitar', 'pluck', 'bass', 'lead', 'pad', 'bell', 'sine', 'synth', 'drums'} | keyboards or _gm_name(name) is not None
 
 
 def _is_note_line(tokens):
@@ -775,7 +967,9 @@ def _friendly_lines(lines):
                 pattern_lines.extend(child.children)
             elif _is_note_line(child.tokens) or key in {'length', 'swing'}:
                 pattern_lines.append(child)
-            elif key in {'volume', 'pan', 'instrument', 'pattern', 'audio', 'filter', 'reverb', 'delay', 'distortion'}:
+            elif key in {'volume', 'pan', 'instrument', 'pattern', 'audio', 'filter', 'reverb',
+                         'delay', 'distortion', 'granular', 'tube', 'overdrive', 'compressor',
+                         'chorus', 'equalizer', 'arpeggiator'}:
                 if key == 'instrument' and len(child.tokens) > 2:
                     child.tokens = ['instrument', ' '.join(child.tokens[1:])]
                 track_lines.append(child)

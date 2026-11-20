@@ -1,5 +1,6 @@
 """Contract tests cover timing, synthesis, PCM encoding, and CLI behavior."""
 
+import ctypes.util
 import hashlib
 from dataclasses import replace
 import subprocess
@@ -43,6 +44,29 @@ pattern tone
     {pitch} on 1 hold 1 beat
 track tone instrument sine pattern tone volume -6db
 '''
+
+
+def test_professional_dsp_and_keyboard_presets():
+    song = parse_song('''instrument keys
+    type synth
+    oscillator saw unison 3 detune 0.004
+    tube drive 4 bias 0.55 mix 0.7
+    overdrive drive 2 tone 5000hz mix 0.4
+    compressor threshold -12db ratio 4 attack 10ms release 100ms makeup 2db
+    chorus rate 0.7hz depth 0.003 mix 0.25
+    equalizer low 1.2 mid 1.0 high 1.4
+    reverb plate mix 0.2
+pattern tone
+    c4 on 1
+track keys instrument keys pattern tone
+''')
+    inst = song.instruments['keys']
+    assert inst.tube_drive == 4
+    assert inst.overdrive_drive == 2
+    assert inst.compressor_ratio == 4
+    assert inst.chorus_mix == 0.25
+    assert inst.reverb_type == 'plate'
+    assert parse_song('track keys instrument juno pattern tone\npattern tone\n c4 on 1').instruments['juno'].chorus_mix == 0.22
 
 
 def test_readme_first_beat_loops():
@@ -299,3 +323,26 @@ def test_short_empty_pattern_rejected_without_looping(tmp_path):
     song = parse_song('length 1 bar\npattern empty\n    length 1/10000000 beats\ntrack tone instrument sine pattern empty')
     with pytest.raises(MTLError, match='one million pattern repeats'):
         render_song(song, tmp_path / 'invalid.wav')
+
+
+@pytest.mark.skipif(
+    not (ROOT / 'audio_tests/assets/GeneralUser-GS.sf2').is_file()
+    or not ctypes.util.find_library('fluidsynth'),
+    reason='requires the optional GeneralUser GS bank and FluidSynth',
+)
+def test_soundfont_plays_velocity_sensitive_presets_and_gm_drums():
+    sf2 = ROOT / 'audio_tests/assets/GeneralUser-GS.sf2'
+    from mtl.soundfont import verify_soundfont
+    metadata = verify_soundfont(sf2)
+    assert metadata['sample_frames'] > 0
+    assert {'Tine Electric Piano', 'Standard 1'} <= set(metadata['presets'])
+    keys = Instrument('tine', engine='soundfont', sf2_path=str(sf2), sf2_preset='Tine Electric Piano')
+    drums = Instrument('kit', engine='soundfont', sf2_path=str(sf2), sf2_preset='Standard 1')
+    soft = synthesize(keys, 'c4', 0.35, 22050, 3, np.random.default_rng(1), velocity=0.2)
+    hard = synthesize(keys, 'c4', 0.35, 22050, 3, np.random.default_rng(1), velocity=0.9)
+    soft_kick = synthesize(drums, 'kick', 0.1, 22050, 3, np.random.default_rng(1), velocity=0.2)
+    hard_kick = synthesize(drums, 'kick', 0.1, 22050, 3, np.random.default_rng(1), velocity=0.9)
+    assert soft.shape[1] == hard.shape[1] == soft_kick.shape[1] == hard_kick.shape[1] == 2
+    assert np.sqrt(np.mean(hard**2)) > np.sqrt(np.mean(soft**2)) * 3
+    assert np.sqrt(np.mean(hard_kick**2)) > np.sqrt(np.mean(soft_kick**2)) * 3
+    assert np.max(np.abs(hard_kick)) > 0.01

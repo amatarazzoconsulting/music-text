@@ -32,6 +32,35 @@ def sample_at(beat, song):
     return round(beat * 60 * song.sample_rate / Fraction(str(song.bpm)))
 
 
+def _transpose_pitch(pitch, semitones):
+    midi = round(69 + 12 * math.log2(frequency(pitch) / 440)) + semitones
+    if not 0 <= midi <= 127:
+        raise MTLError(f"arpeggiator transposition takes {pitch} outside MIDI pitch range")
+    names = ("c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b")
+    return f"{names[midi % 12]}{midi // 12 - 1}"
+
+
+def _arpeggio_pitches(track, pitches, rng):
+    arp = track.arpeggiator
+    ordered = sorted(pitches, key=frequency)
+    expanded = tuple(_transpose_pitch(pitch, 12 * octave)
+                     for octave in range(arp.octaves) for pitch in ordered)
+    if arp.pattern:
+        if any(step > len(expanded) for step in arp.pattern):
+            raise MTLError(f"track {track.name!r}: arpeggiator pattern selects a step outside its chord")
+        return tuple(None if step == 0 else expanded[step - 1] for step in arp.pattern)
+    if arp.mode == "random":
+        order = rng.permutation(len(expanded)).tolist()
+    elif arp.mode == "down":
+        order = list(reversed(range(len(expanded))))
+    elif arp.mode == "up_down":
+        ascending = list(range(len(expanded)))
+        order = ascending + list(range(len(expanded) - 2, 0, -1))
+    else:
+        order = list(range(len(expanded)))
+    return tuple(expanded[index] for index in order)
+
+
 def compile_timeline(song):
     """Restart patterns and release held notes at each section boundary."""
     regions = []
@@ -71,6 +100,33 @@ def compile_timeline(song):
                     if note.beat % 1 == Fraction(1, 2):
                         beat += Fraction(str(pattern.swing / 100 - 0.5))
                     if beat >= end:
+                        continue
+                    arp = song.tracks[name].arpeggiator
+                    if arp and note.pitches[0] not in DRUMS:
+                        step_count = math.ceil(note.duration / arp.step)
+                        if step_count > 100000:
+                            raise MTLError(f"track {name!r}: arpeggiator note exceeds 100000 steps")
+                        step_order = _arpeggio_pitches(song.tracks[name], note.pitches, rng)
+                        note_end_beat = beat + note.duration
+                        for step_index in range(step_count):
+                            pitch = step_order[step_index % len(step_order)]
+                            if pitch is None:
+                                continue
+                            onset_beat = beat + arp.step * step_index
+                            if onset_beat >= end or onset_beat >= note_end_beat:
+                                continue
+                            onset = sample_at(onset_beat, song)
+                            if song.timing_ms:
+                                onset += round(rng.uniform(-song.timing_ms, song.timing_ms) * song.sample_rate / 1000)
+                            onset = max(sample_at(start, song), min(onset, sample_at(end, song) - 1))
+                            gate = min(float(arp.step) * arp.gate * 60 / song.bpm,
+                                       float(note_end_beat - onset_beat) * 60 / song.bpm,
+                                       (sample_at(end, song) - onset) / song.sample_rate)
+                            velocity = np.clip(note.velocity + rng.uniform(-song.velocity_variation, song.velocity_variation), 0, 1)
+                            events.append(Event(onset, gate, name, pitch, float(velocity),
+                                                int(rng.integers(2**32)), note_index))
+                            if len(events) > 1000000:
+                                raise MTLError("song exceeds one million scheduled notes; shorten the song or patterns")
                         continue
                     onset = sample_at(beat, song)
                     if song.timing_ms:
@@ -173,6 +229,29 @@ def _mix_voice(mix, voice, onset, track, velocity, song, curves):
         mix[onset + offset:onset + offset + size] += voice[offset:offset + size] * volume[:, None] * gains
 
 
+def _synthesize_layers(inst, song, pitch, gate_seconds, quality, seed, start_sample,
+                       velocity, cutoff_curve, depth=0):
+    if not inst.layers:
+        return synthesize(inst, pitch, gate_seconds, song.sample_rate, quality,
+                          np.random.default_rng(seed), start_sample=start_sample,
+                          cutoff_curve=cutoff_curve, velocity=velocity)
+    if depth >= 16:
+        raise MTLError(f"instrument {inst.name!r}: layer nesting exceeds 16")
+    voices = [_synthesize_layers(song.instruments[name], song, pitch, gate_seconds, quality,
+                                seed + index + 1, start_sample, velocity, cutoff_curve, depth + 1)
+              for index, name in enumerate(inst.layers)]
+    length = max(map(len, voices))
+    weights = inst.layer_balance or tuple(1.0 for _ in voices)
+    norm = math.sqrt(sum(weight * weight for weight in weights))
+    mixed = np.zeros(length, dtype=float)
+    for voice, weight in zip(voices, weights):
+        mixed[:len(voice)] += voice * (weight / norm)
+    processed = process_audio(mixed[:, None], inst, song.sample_rate, quality,
+                              np.random.default_rng(seed), start_sample=start_sample,
+                              cutoff_curve=cutoff_curve)
+    return processed[:, 0]
+
+
 def render_song(song, output=None, *, quality=3):
     """Render to stereo 16/24-bit WAV; return output statistics.
 
@@ -192,7 +271,9 @@ def render_song(song, output=None, *, quality=3):
     events = compile_timeline(song)
     curves = _automation_curves(song)
     clips = _clip_events(song, events)
-    sources = [clip.path for _, _, clip in clips] + [inst.sample_path for inst in song.instruments.values() if inst.sample_path]
+    sources = ([clip.path for _, _, clip in clips]
+               + [inst.sample_path for inst in song.instruments.values() if inst.sample_path]
+               + [inst.sf2_path for inst in song.instruments.values() if inst.sf2_path])
     for inst in song.instruments.values():
         if inst.engine == 'multisampler':
             from .multisample import _map
@@ -204,12 +285,19 @@ def render_song(song, output=None, *, quality=3):
                 raise MTLError(f'cannot read sample map {map_path}: {exc}') from exc
             sources.append(str(map_path))
             sources.extend(str(map_path.parent / f) for zone in zones for f in zone['files'])
+        if inst.engine == 'soundfont':
+            from .soundfont import verify_soundfont
+            info = verify_soundfont(inst.sf2_path)
+            if inst.sf2_preset and inst.sf2_preset not in info['presets']:
+                raise MTLError(f"SF2 preset {inst.sf2_preset!r} not found in {inst.sf2_path}")
     if any(destination.resolve() == Path(source).resolve() for source in sources):
         raise MTLError("output must not overwrite an input WAV")
     # Prevent unexpectedly large single-note allocations (including oversampling).
     for event in events:
         track = song.tracks[event.track]
-        if track.instrument != "drums" and song.instruments[track.instrument].engine != "drum" and frequency(event.pitch) >= song.sample_rate / 2:
+        if (event.pitch not in DRUMS and track.instrument != "drums"
+                and song.instruments[track.instrument].engine != "drum"
+                and frequency(event.pitch) >= song.sample_rate / 2):
             raise MTLError(f"note {event.pitch} is at or above Nyquist; select a higher sample rate")
     if any(event.gate_seconds > 60 for event in events):
         raise MTLError("a note exceeds 60 seconds; use shorter tied/repeated notes")
@@ -241,9 +329,14 @@ def render_song(song, output=None, *, quality=3):
                     inst = replace(inst, name='kick')
                 cutoff_ramps = curves.get((event.track, 'filter.cutoff'), ())
                 cutoff_curve = (lambda t: float(_control_value(t, inst.cutoff, cutoff_ramps))) if cutoff_ramps else None
-                voice = synthesize(inst, event.pitch, event.gate_seconds, song.sample_rate, quality,
-                                   np.random.default_rng(event.seed), start_sample=event.sample,
-                                   cutoff_curve=cutoff_curve, velocity=event.velocity)
+                if inst.layers:
+                    voice = _synthesize_layers(inst, song, event.pitch, event.gate_seconds,
+                                               quality, event.seed, event.sample, event.velocity,
+                                               cutoff_curve)
+                else:
+                    voice = synthesize(inst, event.pitch, event.gate_seconds, song.sample_rate, quality,
+                                       np.random.default_rng(event.seed), start_sample=event.sample,
+                                       cutoff_curve=cutoff_curve, velocity=event.velocity)
                 if inst.engine == 'piano':
                     from .piano import piano_image
                     voice = piano_image(voice, frequency(event.pitch), song.sample_rate, inst.stereo_width)

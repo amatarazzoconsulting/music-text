@@ -1,0 +1,56 @@
+song "Rooms of Soft Light"
+bpm 76
+time_signature 4/4
+sample_rate 44100
+bit_depth 24
+seed 41
+import "../mtl/presets/hybrid.mtl"
+
+pattern chords
+    length 4 bars
+    chord f3 a3 c4 on 1 hold 4 beats vel 0.62
+    chord d3 f3 a3 on 5 hold 4 beats vel 0.58
+    chord bb2 d3 f3 on 9 hold 4 beats vel 0.6
+    chord c3 e3 g3 on 13 hold 4 beats vel 0.56
+
+pattern broken
+    length 4 bars
+    chord f4 a4 c5 on 1 hold 4 beats vel 0.56
+    chord d4 f4 a4 on 5 hold 4 beats vel 0.52
+    chord bb3 d4 f4 on 9 hold 4 beats vel 0.54
+    chord c4 e4 g4 on 13 hold 4 beats vel 0.5
+
+pattern answer
+    length 4 bars
+    c5 on 2 hold 1.5 beats vel 0.56
+    a4 on 4 hold 1 beat vel 0.5
+    d5 on 6 hold 1.5 beats vel 0.54
+    f5 on 8 hold 1 beat vel 0.58
+    f5 on 10 hold 1.5 beats vel 0.6
+    d5 on 12 hold 1 beat vel 0.52
+    e5 on 14 hold 1.5 beats vel 0.54
+    c5 on 16 hold 1 beat vel 0.5
+
+track wash instrument grain_halo pattern chords volume -11db pan -10
+track bed instrument layered_sky pattern chords volume -13db pan 10
+track droplets instrument metallic_keys pattern broken volume -16db
+    arpeggiator rate 1/4 mode down octaves 1 gate 0.62 pattern 3,2,1,2
+track voice instrument vector_lead pattern answer volume -17db
+
+section haze
+    length 4 bars
+    wash only
+    add bed
+section reflection
+    length 4 bars
+    add droplets
+    add voice
+section release
+    length 4 bars
+    remove droplets
+    remove voice
+humanize all tracks
+    timing ±6ms
+    velocity ±3%
+master
+    peak -1db

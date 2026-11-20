@@ -18,3 +18,101 @@ instrument moving_bass
     filter lowpass cutoff 1200hz resonance 0.9
     lfo rate 1/8 target filter.cutoff depth 900hz
     distortion medium
+
+instrument glass_sub
+    type synth
+    oscillator sine unison 1
+    oscillator2 triangle level 0.18 transpose -12
+    filter lowpass cutoff 240hz resonance 0.55
+    envelope attack 8ms decay 140ms sustain 0.82 release 90ms
+    compressor threshold -12db ratio 2.2 attack 12ms release 110ms
+
+instrument ember_bass
+    type synth
+    oscillator saw unison 2 detune 0.004
+    oscillator2 sine level 0.52 transpose -12
+    filter lowpass cutoff 680hz resonance 0.92
+    envelope attack 3ms decay 210ms sustain 0.68 release 120ms
+    distortion light
+
+instrument amber_pulse
+    type synth
+    oscillator square unison 2 detune 0.003
+    filter lowpass cutoff 2400hz resonance 0.75
+    envelope attack 4ms decay 190ms sustain 0.48 release 130ms
+    lfo rate 1/8 target filter.cutoff depth 420hz
+
+instrument prism_stab
+    type synth
+    oscillator saw unison 4 detune 0.012
+    oscillator2 square level 0.2 transpose 12
+    filter lowpass cutoff 4300hz resonance 0.82
+    envelope attack 2ms decay 260ms sustain 0.28 release 160ms
+    chorus rate 0.42hz depth 0.002 mix 0.16
+
+instrument linen_chord
+    type synth
+    oscillator triangle unison 4 detune 0.009
+    oscillator2 sine level 0.22 transpose 7
+    filter lowpass cutoff 3100hz resonance 0.55
+    envelope attack 110ms decay 620ms sustain 0.68 release 900ms
+    chorus rate 0.2hz depth 0.003 mix 0.28
+    reverb hall mix 0.18
+
+instrument ion_drive
+    type synth
+    oscillator saw unison 3 detune 0.006
+    oscillator2 noise level 0.08 transpose 0
+    filter lowpass cutoff 7200hz resonance 0.68
+    envelope attack 5ms decay 180ms sustain 0.62 release 210ms
+    overdrive drive 2.4 tone 5400hz mix 0.32
+    delay time 0.25s feedback 0.24 mix 0.14
+
+instrument cobalt_fm
+    type fm
+    filter lowpass cutoff 7800hz resonance 0.42
+    envelope attack 6ms decay 720ms sustain 0.34 release 520ms
+    chorus rate 0.28hz depth 0.002 mix 0.18
+    reverb plate mix 0.16
+
+instrument orbit_bell
+    type fm
+    filter lowpass cutoff 11500hz resonance 0.38
+    envelope attack 1ms decay 980ms sustain 0.16 release 850ms
+    delay time 0.375s feedback 0.22 mix 0.18
+    reverb shimmer mix 0.2
+
+instrument vapor_sweep
+    type synth
+    oscillator saw unison 5 detune 0.016
+    oscillator2 triangle level 0.24 transpose 12 detune 0.004
+    filter lowpass cutoff 1800hz resonance 0.72
+    envelope attack 450ms decay 850ms sustain 0.7 release 1500ms
+    lfo rate 1/2 target filter.cutoff depth 1150hz
+    chorus rate 0.12hz depth 0.004 mix 0.34
+    reverb hall mix 0.24
+
+instrument graphite_keys
+    type fm
+    filter lowpass cutoff 5200hz resonance 0.62
+    envelope attack 2ms decay 360ms sustain 0.28 release 260ms
+    overdrive drive 1.25 tone 3600hz mix 0.16
+    reverb room mix 0.1
+
+instrument radio_static
+    type synth
+    oscillator noise unison 1
+    oscillator2 sine level 0.12 transpose 7
+    filter highpass cutoff 820hz resonance 1.1
+    envelope attack 60ms decay 700ms sustain 0.42 release 950ms
+    granular size 80ms density 18hz spray 120ms pitch 5 mix 0.18
+    delay time 0.5s feedback 0.3 mix 0.16
+
+instrument velvet_sequence
+    type synth
+    oscillator triangle unison 2 detune 0.006
+    oscillator2 square level 0.16 transpose 12
+    filter lowpass cutoff 5100hz resonance 0.64
+    envelope attack 12ms decay 440ms sustain 0.42 release 280ms
+    lfo rate 1/16 target filter.cutoff depth 360hz
+    delay time 0.25s feedback 0.18 mix 0.12

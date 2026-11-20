@@ -9,3 +9,4 @@ dist/
 
 # Published listening demonstrations
 !audio_tests/*.wav
+audio_tests/assets/*.sf2

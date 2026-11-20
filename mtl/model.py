@@ -44,6 +44,46 @@ class Instrument:
     pedal: float = 0
     stereo_width: float = .65
     sample_map: str = ""
+    reverb_type: str = "hall"
+    tube_drive: float = 0.0
+    tube_bias: float = 0.5
+    tube_mix: float = 1.0
+    overdrive_drive: float = 0.0
+    overdrive_tone: float = 5000.0
+    overdrive_mix: float = 1.0
+    compressor_threshold: float = 1.0
+    compressor_ratio: float = 1.0
+    compressor_attack: float = 0.01
+    compressor_release: float = 0.1
+    compressor_makeup: float = 1.0
+    chorus_rate: float = 0.0
+    chorus_depth: float = 0.002
+    chorus_mix: float = 0.0
+    eq_low: float = 1.0
+    eq_mid: float = 1.0
+    eq_high: float = 1.0
+    sf2_path: str = ""
+    sf2_preset: str = ""
+    layers: tuple[str, ...] = ()
+    layer_balance: tuple[float, ...] = ()
+    oscillator2_waveform: str = ""
+    oscillator2_level: float = 0.0
+    oscillator2_semitones: int = 0
+    oscillator2_detune: float = 0.0
+    grain_size: float = 0.08
+    grain_density: float = 12.0
+    grain_spray: float = 0.0
+    grain_pitch: float = 0.0
+    grain_mix: float = 0.0
+
+
+@dataclass(frozen=True)
+class Arpeggiator:
+    step: Fraction = Fraction(1, 2)
+    mode: str = "up_down"
+    octaves: int = 1
+    gate: float = 0.85
+    pattern: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -84,6 +124,7 @@ class Track:
     pan: float = 0.0
     clips: list[AudioClip] = field(default_factory=list)
     effects: Instrument | None = None
+    arpeggiator: Arpeggiator | None = None
 
 
 @dataclass

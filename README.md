@@ -8,6 +8,8 @@ MTL is a Python program that reads a text song file and renders stereo WAV audio
 
 **Start here, in order.** This tutorial is followed by the full language reference and all 128 default instrument names. Audio you can listen to and edit is in [audio_tests](audio_tests/README.md). The historical product draft describes future ideas; this manual describes the working Python implementation.
 
+For a progressive, example-led course covering notes, patterns, presets, sound design, timelines and the guided composer, see the [MTL learning manual](docs/learning-manual.md).
+
 ## 1. Install once
 
 Install Python 3.11 or newer, download or clone this repository, and open a terminal in its folder. Create a private Python environment:
@@ -135,7 +137,17 @@ Structured mode is selected by explicit instrument/track/pattern/section command
 
 ## 5. Choose and shape sounds
 
-Run `mtl --list-instruments` to browse the 128 GM names. `piano`, `violin`, `trumpet`, `vibes` and `organ` are useful starting names. Quote multiword names in inline commands, for example `instrument "acoustic grand piano"`. A custom instrument based on one of these lets you adjust the sound without editing package presets.
+Run `mtl --list-instruments` to browse the 128 GM names, or search the bundled preset banks by name, engine or timbral terms:
+
+```bash
+mtl search-instruments glass
+mtl search-instruments bass --bank synth1_bank --limit 20
+mtl search-instruments glass --bank presets/my_sounds.mtl
+```
+
+The banks include acoustic, electronic, hybrid and organ voices plus 2,000 creatively renamed Synth1-derived presets. Search terms are case-insensitive; when several words are supplied, every term must match. `--bank` accepts a bundled bank name or an external instrument-only `.mtl` bank path. `piano`, `violin`, `trumpet`, `vibes` and `organ` are useful starting names. Quote multiword names in inline commands, for example `instrument "acoustic grand piano"`. A custom instrument based on one of these lets you adjust the sound without editing package presets.
+
+To compose with menus, run `mtl interactive new_song.mtl`. Choose a preset bank and lead/harmony sounds, a key and a melody shape; then inspect the generated patterns and timeline, append/reorder/remove sections, and save the editable MTL source. Render it separately with `mtl new_song.mtl new_song.wav`.
 
 A piano's `hammer` changes brightness, `string_detune` changes string beating, `soundboard` controls body modes, `stereo_width` changes its keyboard image, and `pedal` lengthens release. The last is static; it is not a performance of sustain-pedal presses. For recorded sound, the reference explains WAV sampler and stereo multisampler maps.
 
@@ -213,6 +225,30 @@ The bass LFO is a periodic cutoff movement. Section automation sets a larger swe
 
 Delay repeats notes at a fixed interval; feedback determines how quickly repeats die away. Reverb adds a diffuse tail. Distortion changes tone and can increase brightness. Insert order is filter → distortion → delay → reverb. Track inserts process each voice separately, after its instrument effects; these are not shared mixer buses. The [DSP comparison WAV](audio_tests/dsp_comparison.wav) plays the same phrase dry, filtered, distorted, delayed and reverberated in successive two-second sections.
 
+Additional instrument and mixer effects are available on instrument and track blocks:
+
+```text
+instrument pro_keys
+    type synth
+    oscillator saw unison 3 detune 0.004
+    tube drive 4 bias 0.55 mix 0.7
+    overdrive drive 2 tone 5000hz mix 0.4
+    compressor threshold -12db ratio 4 attack 10ms release 100ms makeup 2db
+    chorus rate 0.7hz depth 0.003 mix 0.25
+    equalizer low 1.2 mid 1.0 high 1.4
+    reverb plate mix 0.20
+```
+
+Reverb types include `room`, `hall`, `cathedral`, `plate`, `spring`, `chamber`, `ambient`, and `shimmer`. Known keyboard presets include Rhodes/Fender Rhodes, DX7, Juno, Jupiter, Prophet, Moog, Clavinet, and Wurlitzer names.
+
+A SoundFont can be declared with `soundfont "file.sf2" preset "Preset Name"` and verified independently:
+
+```bash
+mtl --verify-soundfont file.sf2
+```
+
+SoundFont tracks render through the FluidSynth library (`libfluidsynth`), which must be installed separately from the Python package. Presets receive note velocity directly; named drum hits on a SoundFont track use the GM percussion channel and the selected kit preset.
+
 ## 7. Reuse instruments, samples and relative events
 
 Put instrument declarations in a separate `.mtl` file and load them with `import "presets/my_keys.mtl"`. Imports may contain instruments and other imports, not song tracks. Paths are relative to the file that declares them. A sample path inside that bank is relative to the bank, not the terminal.
@@ -271,11 +307,14 @@ Windows users can activate with `.venv\Scripts\activate`. `python -m mtl` is equ
 ```bash
 mtl song.mtl song.wav
 mtl song.mtl --check
+mtl convert-midi performance.mid
+mtl search-instruments glass
+mtl interactive new_song.mtl
 mtl --list-instruments
 python -m pytest -q
 ```
 
-Usage: `mtl INPUT.mtl [OUTPUT.wav] [--quality 1..5] [--sample-rate RATE] [--bit-depth 16|24]`. The output argument overrides the `output` or `render to` command. Output paths are relative to the current working directory. Imported files and samples are resolved relative to the file declaring them. `--sample_rate` and `--bit_depth` are aliases. `--check` validates parsing, note scheduling and clip references, but does not read WAV assets. `--version` prints the version. A render error returns status 1 and preserves the destination; invalid CLI arguments return status 2.
+Usage: `mtl INPUT.mtl [OUTPUT.wav] [--quality 1..5] [--sample-rate RATE] [--bit-depth 16|24]`. The output argument overrides the `output` or `render to` command. Output paths are relative to the current working directory. Imported files and samples are resolved relative to the file declaring them. `--sample_rate` and `--bit_depth` are aliases. `--check` validates parsing, note scheduling and clip references, but does not read WAV assets. `--version` prints the version. `mtl convert-midi INPUT.mid [OUTPUT.mtl]` creates editable MTL source; the output defaults to the input filename with an `.mtl` extension. Tempo changes are baked into note positions at 120 BPM. A render error returns status 1 and preserves the destination; invalid CLI arguments return status 2.
 
 Defaults are 120 BPM, 4/4, 48 kHz, 24-bit stereo PCM, quality 3 and `output.wav`. Supported rates are 22050, 44100, 48000, 88200 and 96000 Hz. Quality 1–2 uses native-rate synthesis, 3–4 uses 2× oversampling and 5 uses 4×. Rendered files are WAV, and playback is not started automatically.
 
@@ -368,7 +407,7 @@ drums
 
 `PITCH ... on POSITIONS` plays simultaneous pitches. Use `hold DURATION`, followed optionally by `vel VALUE` or one velocity per position (0–1, or e.g. `80%`). The default gate for timed notes is half a beat. `play ROOT major|minor for DURATION` places triads in sequence; the default chord octave is 3. `every 1/4`, `every 1/8` and `every 1/8t` repeat at note values; `t` denotes a triplet. `swing 60` accepts 50–75 and delays the second eighth note of each beat.
 
-Patterns default to one bar and grow to whole bars to contain explicit events unless `length` is specified. Pattern length defaults to bars; a note's bare duration defaults to beats. Pitches are MIDI range 0–127, with A4 = 440 Hz. Notes at or above output Nyquist are rejected. Drum names are `kick`, `snare`, `hihat`, `closed_hat`, `open_hat`, `hat`, `clap`, `tom`, `ride`, `cymbal`, and `perc`. A drum pattern on an explicit track uses `instrument drums`.
+Patterns default to one bar and grow to whole bars to contain explicit events unless `length` is specified. Pattern length defaults to bars; a note's bare duration defaults to beats. Pitches are MIDI range 0–127, with A4 = 440 Hz. Notes at or above output Nyquist are rejected. Drum names are `kick`, `snare`, `hihat`, `closed_hat`, `open_hat`, `hat`, `clap`, `tom`, `ride`, `cymbal`, and `perc`. A drum pattern on an explicit track uses `instrument drums` or a SoundFont instrument configured with a percussion kit.
 
 You can use a grid and spoken values:
 
@@ -412,7 +451,7 @@ instrument solo from gm_trumpet
     vibrato rate 5.5hz depth 0.003
 ```
 
-Built-in banks: `general_midi`, `acoustic`, `organs`, `electronic`. All 128 zero-based GM program names work without import; `mtl --list-instruments` lists them. Built-in GM voices are synthetic approximations, not sampled GM playback. Other implicit names include `sine`, `synth`, `bass`, `lead`, `pad`, `piano`, `guitar`, `pluck`, and `bell`. Custom declarations take precedence. Imports are relative to their declaring file and may contain instruments and imports only; repeated imports are deduplicated, cycles and duplicate names are errors. Inheritance copies the preset.
+Built-in banks: `general_midi`, `acoustic`, `organs`, `electronic`, `hybrid`, and `synth1_bank`. The Synth1 bank contains 2,000 diverse, creatively renamed approximate conversions; `mtl convert-synth1` uses the same default limit, and `mtl curate-synth1 INPUT.mtl OUTPUT.mtl` can reduce an existing converted bank. `mtl search-instruments WORDS` searches bundled names, engines and bank labels. All 128 zero-based GM program names work without import; `mtl --list-instruments` lists them. Built-in GM voices are synthetic approximations, not sampled GM playback. Other implicit names include `sine`, `synth`, `bass`, `lead`, `pad`, `piano`, `guitar`, `pluck`, and `bell`. Custom declarations take precedence. Imports are relative to their declaring file and may contain instruments and imports only; repeated imports are deduplicated, cycles and duplicate names are errors. Inheritance copies the preset.
 
 | Instrument instruction | Values / behavior |
 | --- | --- |
@@ -466,7 +505,7 @@ instrument recorded_grand
 }
 ```
 
-Paths are relative to the map, key ranges are inclusive, velocity centers are 0–1 and loop endpoints are seconds. The closest root is selected and adjacent velocity layers are interpolated. The map permits 1–2048 zones, 1–32 WAVs per zone and at most 2 MiB. Missing coverage or assets produce an error. There are no built-in commercial recordings, release samples, pedal resonance samples, SoundFont or plugin hosting. See [multisample details](docs/compact-songs-and-piano.md#recorded-piano-libraries-stereo-multisampling).
+Paths are relative to the map, key ranges are inclusive, velocity centers are 0–1 and loop endpoints are seconds. The closest root is selected and adjacent velocity layers are interpolated. The map permits 1–2048 zones, 1–32 WAVs per zone and at most 2 MiB. Missing coverage or assets produce an error. The multisampler has no built-in commercial recordings, release samples or pedal-resonance samples. SoundFont playback is a separate instrument engine; VST hosting is not supported. See [multisample details](docs/compact-songs-and-piano.md#recorded-piano-libraries-stereo-multisampling).
 
 ### Tracks, sections and clips
 
@@ -541,7 +580,7 @@ print(stats["seconds"], stats["events"])
 - [Piano and note references](examples/easy_events.mtl), [synthesis and automation](examples/wobble.mtl), [instrument showcase](examples/instrument_showcase.mtl), and [WAV session](examples/wav_session.mtl). Render `instrument_showcase.mtl` to `examples/colors.wav` before running the WAV session.
 - [Compact songs and piano](docs/compact-songs-and-piano.md), [friendly syntax](docs/friendly-entry-and-piano.md), [instrument banks and WAV tracks](docs/instruments-and-audio.md), [structured renderer](docs/python-renderer.md), and [algorithm assessment](docs/audio-algorithms.md).
 
-The instruments are synthesized approximations; commercial piano or VST parity is not established. Features described only in the historical draft—such as arbitrary conversational composition, tempo maps, VST hosting, SoundFont import, live MIDI, shared buses and LUFS mastering—are not implemented.
+The built-in instruments are synthesized approximations; commercial piano or VST parity is not established. Features described only in the historical draft—such as arbitrary conversational composition, tempo maps, VST hosting, live MIDI, shared buses and LUFS mastering—are not implemented.
 
 
 <!-- coderabbit-ai-generated:v1 -->
@@ -555,6 +594,11 @@ The instruments are synthesized approximations; commercial piano or VST parity i
 | --- | --- | --- |
 | `INPUT.mtl` | The song text file to read. | Required except with `--help`, `--version` or `--list-instruments`. |
 | `OUTPUT.wav` | Select the destination for this render. | Optional; overrides `output` / `render to`; otherwise `output.wav`. |
+| `convert-midi INPUT.mid [OUTPUT.mtl]` | Convert a Standard MIDI File to editable MTL source. | Format 0/1, PPQN timing; tempo changes are represented as note timing at 120 BPM. |
+| `search-instruments [WORDS]` | Search bundled presets by name, bank, engine, waveform and timbral terms. | Optional `--bank` and `--limit`; all supplied words must match. |
+| `interactive [OUTPUT.mtl]` | Open the guided melody composer and section timeline editor. | Menu-driven; saves a validated MTL source. `--force` permits replacing an existing file. |
+| `convert-synth1 ZIP [OUTPUT.mtl]` | Convert nested `.sy1` patches into creatively named MTL presets. | Diverse subset capped at 2,000 by default; `--limit` changes the cap. |
+| `curate-synth1 INPUT.mtl [OUTPUT.mtl]` | Reduce and rename an existing converted Synth1 bank. | Defaults to 2,000 and strips source comments/names; explicit same input/output path updates in place. |
 | `--quality N` | Trade more computation for higher internal sample rate. | 1–5; default 3. Pairs 1/2 and 3/4 share algorithms. |
 | `--sample-rate N` / `--sample_rate N` | Choose the output sample rate. | 22050, 44100, 48000, 88200, 96000; default 48000. Overrides the script. |
 | `--bit-depth N` / `--bit_depth N` | Choose integer PCM resolution. | 16 or 24; default 24. Overrides the script. |
@@ -567,7 +611,7 @@ There are no command-line tempo, key, instrument or style flags. Write those in 
 
 ## Parameter rules and processing details
 
-- **Instrument versus track effects:** an instrument declaration defines reusable synthesis and effects. A track's own filter, distortion, delay and reverb are an additional insert chain. Setting a track reverb does not replace an instrument's reverb. Overlapping voices keep independent effect histories.
+- **Instrument versus track effects:** an instrument declaration defines reusable synthesis and effects. A track's own filter, distortion, overdrive, tube, compressor, chorus, EQ, granular, delay and reverb are additional inserts. Setting a track reverb does not replace an instrument's reverb. Overlapping voices keep independent effect histories.
 - **Envelope units:** attack, decay and release are durations, not percentages. Sustain is 0–1. Release starts at the current envelope level, including notes released during attack. Percussion uses its own short natural decay; a held drum event does not become an indefinitely sustained note.
 - **LFO units:** `rate 5hz` means five cycles per second; `rate 1/4` means a quarter-note cycle at the song tempo. Effective rates are limited to 0.01–30 Hz. Depth is a frequency offset, not a normalized fraction. Only a sine LFO targeting `filter.cutoff` is implemented. Phase follows the song clock.
 - **Filter safety:** cutoff is clamped internally to 20 Hz–45% of internal sample rate. Resonance is Q, not a 0–1 wetness control. Automation of cutoff uses Hz; volume automation uses dB.
@@ -576,7 +620,7 @@ There are no command-line tempo, key, instrument or style flags. Write those in 
 - **Pan controls:** numeric pan is a percentage, −100 left to +100 right. `slightly left` / `slightly right` mean −25 / +25. Mono uses equal-power panning; stereo input uses channel balance. `pan 0` does not collapse a stereo recording to mono.
 - **Sound words:** warm/dark/deep reduce cutoff; bright/airy/sharp increase it; soft/gentle/smooth lengthen attack; short/long change decay/release; punchy changes attack/decay; distorted/gritty/aggressive set drive. These descriptions are applied in source order, so a later explicit filter overrides a preceding sound word. Other permitted connecting words do not create additional physical models.
 - **Resource limits:** a note gate may be at most 60 seconds. Pattern-line repeat expansion is limited to 100000 events; compiled scheduling and pattern repeats have million-event guards. WAV output uses standard RIFF, up to approximately 4 GiB. Input WAVs are limited to 120 seconds and 64 MiB each. Rendering needs temporary disk space for the floating-point stereo mix as well as the destination file.
-- **File formats:** `.mtl` is plain UTF-8 text, preset banks use the same instrument grammar, multisample maps are JSON, and audio input/output is WAV. MIDI, MP3, FLAC, SF2 and proprietary plugin containers are not accepted by this release.
+- **File formats:** `.mtl` is plain UTF-8 text, preset banks use the same instrument grammar, multisample maps are JSON, and audio input/output is WAV. Standard MIDI format 0/1 files with PPQN timing can be converted to MTL with `mtl convert-midi`; Synth1 `.sy1` patches in nested zip banks can be translated with `mtl convert-synth1`. SMPTE-timed and format 2 MIDI files are not supported. MP3, FLAC and proprietary plugin containers are not accepted by this release. SF2 banks are supported as instrument assets through FluidSynth.
 
 ## Default General MIDI instrument catalog
 
